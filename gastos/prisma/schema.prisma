@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Sheet {
+  id              String   @id @default(uuid())
+  name            String
+  createdAt       DateTime @default(now())
+  items           Item[]
+  order           Int
+  defaultCurrency String   @default("PHP")
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String
+  items     Item[]
+  createdAt DateTime @default(now())
+  order     Int
+}
+
+model Item {
+  id         String   @id @default(uuid())
+  name       String
+  datetime   DateTime @default(now())
+  createdAt  DateTime @default(now())
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+  sheet      Sheet    @relation(fields: [sheetId], references: [id])
+  sheetId    String
+  price      Float    @default(0)
+  currency   String   @default("PHP")
+}

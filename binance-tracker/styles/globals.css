@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@keyframes toGreen {
+  0% {
+    color: rgb(229 231 235);
+  }
+
+  50% {
+    color: rgb(34 197 94);
+  }
+
+  100% {
+    color: rgb(229 231 235);
+  }
+}
+
+@keyframes toRed {
+  0% {
+    color: rgb(229 231 235);
+  }
+
+  50% {
+    color: rgb(239 68 68);
+  }
+
+  100% {
+    color: rgb(229 231 235);
+  }
+}
+
+.to-red {
+  animation-name: toRed;
+  animation-duration: 1s;
+}
+
+.to-green {
+  animation-name: toGreen;
+  animation-duration: 1s;
+}
+
+.blur {
+  filter: blur(0.5rem);
+}
