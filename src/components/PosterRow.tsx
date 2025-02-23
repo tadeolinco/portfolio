@@ -1,4 +1,5 @@
 import ColorThief from "colorthief";
+import Image from "next/image";
 import { memo, useRef } from "react";
 import { isMobile } from "react-device-detect";
 import baseFilms from "../baseFilms.json";
@@ -37,16 +38,21 @@ function UnmemoizedPosterRow(props: PosterRowProps) {
     film: (typeof baseFilms)[number],
     element: HTMLImageElement
   ) => {
-    const palette = colorThief.getPalette(element, 4);
-    const mainColor = colorThief.getColor(element);
-    if (!palette || palette.length === 0) {
-      props.onChangePalette([[255, 255, 255]]);
-    } else {
-      props.onChangePalette(
-        [mainColor].concat(
-          palette.filter((color) => color.every((c, i) => c !== mainColor[i]))
-        )
-      );
+    if (!element) return;
+    try {
+      const palette = colorThief.getPalette(element, 4);
+      const mainColor = colorThief.getColor(element);
+      if (!palette || palette.length === 0) {
+        props.onChangePalette([[255, 255, 255]]);
+      } else {
+        props.onChangePalette(
+          [mainColor].concat(
+            palette.filter((color) => color.every((c, i) => c !== mainColor[i]))
+          )
+        );
+      }
+    } catch (err) {
+      console.warn(err);
     }
   };
 
@@ -82,7 +88,7 @@ function UnmemoizedPosterRow(props: PosterRowProps) {
           }}
           {...containerProps}
         >
-          <img
+          <Image
             // @ts-expect-error cannot type
             src={cdn[`posters/${uriSlug}`]}
             alt={film["Name"]}
@@ -101,6 +107,8 @@ function UnmemoizedPosterRow(props: PosterRowProps) {
             onPointerDown={(event) => {
               event.currentTarget.releasePointerCapture(event.pointerId);
             }}
+            width={160}
+            height={240}
           />
         </Container>
       );

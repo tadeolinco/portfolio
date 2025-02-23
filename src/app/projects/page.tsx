@@ -1,6 +1,7 @@
 "use client";
 
 import { Dialog, DialogPanel } from "@headlessui/react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Fragment, useEffect, useMemo, useState } from "react";
@@ -127,13 +128,14 @@ export default function ProjectsPage() {
                 />
               )}
               {selectedProject?.image && (
-                <img
+                <Image
                   // @ts-expect-error cannot type
                   src={cdn[selectedProject.image]}
                   className="rounded-xl w-full max-w-none min-h-0 self-center"
                   style={{
                     width: `${100 / (selectedProject.widthDivider ?? 1)}%`,
                   }}
+                  alt={selectedProject.title}
                 />
               )}
             </div>

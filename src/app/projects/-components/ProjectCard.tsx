@@ -1,4 +1,5 @@
 import { Button } from "@headlessui/react";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ProjectType } from "../-constants/projects.constants";
@@ -65,7 +66,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           />
         )}
         {project.image && (
-          <img
+          <Image
             // @ts-expect-error cannot type
             src={cdn[project.image]}
             className={`w-full min-h-0 mx-auto flex-1 rounded-xl`}
@@ -73,6 +74,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
               width: width ? width / (project.widthDivider ?? 1) : undefined,
               aspectRatio,
             }}
+            width={project.width}
+            height={project.height}
+            alt={project.title}
           />
         )}
       </div>

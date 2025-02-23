@@ -1,6 +1,7 @@
 "use client";
 
 import { Field, Label, Switch } from "@headlessui/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { isMobile } from "react-device-detect";
@@ -246,9 +247,12 @@ export default function Home() {
               role="button"
               className="rounded-full p-1 min-w-8 hover:bg-gray-200"
             >
-              <img
+              <Image
                 src="https://a.ltrbxd.com/logos/letterboxd-decal-dots-pos-rgb-500px.png"
                 className="w-6 min-w-6 h-6"
+                alt="Letterboxd"
+                width={24}
+                height={24}
               />
             </a>
           </div>
