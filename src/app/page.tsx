@@ -18,8 +18,6 @@ export default function Home() {
   const [thickness, setThickness] = useState(3);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
     const maxRotation = 25;
 
     const mouseCallback = (event: MouseEvent) => {
@@ -42,8 +40,6 @@ export default function Home() {
     window.addEventListener("mousemove", mouseCallback);
 
     return () => {
-      if (typeof window === "undefined") return;
-
       window.removeEventListener("mousemove", mouseCallback);
     };
   }, []);

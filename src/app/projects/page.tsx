@@ -28,7 +28,9 @@ export default function ProjectsPage() {
     }
   }, [name, selectedProject, router, pathname]);
 
-  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  const [innerWidth, setInnerWidth] = useState(
+    typeof window === "undefined" ? 0 : window.innerWidth
+  );
   const [columnCount, setColumnCount] = useState(
     innerWidth >= 992 ? 3 : innerWidth >= 768 ? 2 : 1
   );

@@ -13,7 +13,9 @@ export function PosterBackground({
   stopGrayscale,
   onChangePalette,
 }: PosterBackgroundProps) {
-  const [rows, setRows] = useState(Math.ceil(window.innerHeight / 256) + 1);
+  const [rows, setRows] = useState(
+    Math.ceil(typeof window === "undefined" ? 0 : window.innerHeight / 256) + 1
+  );
 
   useEffect(() => {
     const handleResize = () => {
