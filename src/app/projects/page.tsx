@@ -28,18 +28,19 @@ export default function ProjectsPage() {
     }
   }, [name, selectedProject, router, pathname]);
 
-  const [innerWidth, setInnerWidth] = useState(
-    typeof window === "undefined" ? 0 : window.innerWidth
-  );
-  const [columnCount, setColumnCount] = useState(
-    innerWidth >= 992 ? 3 : innerWidth >= 768 ? 2 : 1
-  );
+  const [columnCount, setColumnCount] = useState(0);
+
+  useEffect(() => {
+    setColumnCount(
+      window.innerWidth >= 992 ? 3 : window.innerWidth >= 768 ? 2 : 1
+    );
+  }, []);
+
   useEffect(() => {
     const handleResize = () => {
       setColumnCount(
         window.innerWidth >= 992 ? 3 : window.innerWidth >= 768 ? 2 : 1
       );
-      setInnerWidth(window.innerWidth);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -54,6 +55,7 @@ export default function ProjectsPage() {
       columnHeights.push(0);
     }
 
+    if (data.length === 0) return data;
     for (const project of PROJECTS) {
       let shortestColumnIndex = 0;
       let shortestColumnHeight = Infinity;

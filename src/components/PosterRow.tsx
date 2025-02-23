@@ -3,7 +3,6 @@ import Image from "next/image";
 import { memo, useRef } from "react";
 import { isMobile } from "react-device-detect";
 import baseFilms from "../baseFilms.json";
-import cdn from "../cdn.json";
 
 type PosterRowProps = {
   startIndex: number;
@@ -89,8 +88,8 @@ function UnmemoizedPosterRow(props: PosterRowProps) {
           {...containerProps}
         >
           <Image
-            // @ts-expect-error cannot type
-            src={cdn[`posters/${uriSlug}`]}
+            // src={cdn[`posters/${uriSlug}`]}
+            src={`/posters/${uriSlug}/poster.jpg`}
             alt={film["Name"]}
             className={
               "h-full w-full rounded-md object-cover hover:scale-110 transition-all duration-300 filter cursor-pointer" +
@@ -98,9 +97,6 @@ function UnmemoizedPosterRow(props: PosterRowProps) {
               (!props.stopGrayscale ? " grayscale hover:grayscale-0" : "")
             }
             crossOrigin="anonymous"
-            // onMouseEnter={(event) => {
-            //   getPalette(film, event.target as HTMLImageElement);
-            // }}
             onPointerEnter={(event) => {
               handleChangePalette(film, event.target as HTMLImageElement);
             }}
