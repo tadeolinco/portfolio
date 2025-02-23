@@ -3,6 +3,7 @@ import Image from "next/image";
 import { memo, useRef } from "react";
 import { isMobile } from "react-device-detect";
 import baseFilms from "../baseFilms.json";
+import { cdn } from "../staticImports";
 
 type PosterRowProps = {
   startIndex: number;
@@ -88,8 +89,7 @@ function UnmemoizedPosterRow(props: PosterRowProps) {
           {...containerProps}
         >
           <Image
-            // src={cdn[`posters/${uriSlug}`]}
-            src={`/posters/${uriSlug}/poster.jpg`}
+            src={cdn.posters[`poster${uriSlug}` as keyof typeof cdn.posters]}
             alt={film["Name"]}
             className={
               "h-full w-full rounded-md object-cover hover:scale-110 transition-all duration-300 filter cursor-pointer" +
@@ -103,8 +103,6 @@ function UnmemoizedPosterRow(props: PosterRowProps) {
             onPointerDown={(event) => {
               event.currentTarget.releasePointerCapture(event.pointerId);
             }}
-            width={160}
-            height={240}
           />
         </Container>
       );

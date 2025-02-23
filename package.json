@@ -12,7 +12,8 @@
     "convert-json": "node --experimental-transform-types scripts/convertCSVFilms.ts",
     "get-posters": "node --experimental-transform-types scripts/getFilmPosters.ts",
     "sync-cloud": "node --experimental-transform-types scripts/syncCloudinary.ts",
-    "sync": "npm run export-data && npm run convert-json && npm run get-posters && npm run sync-cloud"
+    "generate-static-imports": "node --experimental-transform-types scripts/generateStaticImports.ts",
+    "sync": "npm run export-data && npm run convert-json && npm run get-posters && npm run generate-static-imports && npm run sync-cloud"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",

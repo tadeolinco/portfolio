@@ -3,7 +3,6 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ProjectType } from "../-constants/projects.constants";
-import cdn from "../../../cdn.json";
 import { getProjectSearchName } from "../../../utils";
 
 type ProjectCardProps = {
@@ -51,8 +50,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <div ref={setContainer}>
         {project.video && (
           <video
-            // @ts-expect-error cannot type
-            src={cdn[project.video]}
+            src={project.video}
             playsInline
             autoPlay
             loop
@@ -67,8 +65,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         )}
         {project.image && (
           <Image
-            // @ts-expect-error cannot type
-            src={cdn[project.image]}
+            src={project.image}
             className={`w-full min-h-0 mx-auto flex-1 rounded-xl`}
             style={{
               width: width ? width / (project.widthDivider ?? 1) : undefined,

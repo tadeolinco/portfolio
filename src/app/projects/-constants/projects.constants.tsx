@@ -1,4 +1,8 @@
+import { StaticImageData } from "next/image";
 import { ReactNode } from "react";
+import climateProgramImage from "../../../../public/images/climate-program.jpeg";
+import dashboardImage from "../../../../public/images/dashboards.jpeg";
+import ISSBImage from "../../../../public/images/ISSB.webp";
 
 export type ProjectType = {
   title: string;
@@ -16,7 +20,7 @@ export type ProjectType = {
       video: string;
     }
   | {
-      image: string;
+      image: StaticImageData;
       video?: never;
     }
 );
@@ -117,7 +121,7 @@ export const PROJECTS: ProjectType[] = [
     technologies: ["React", "TypeScript", "Tailwind CSS", "Vite"],
     height: 1293,
     width: 1035,
-    image: "images/dashboards.jpeg",
+    image: dashboardImage,
   },
   {
     title: "Unravel Carbon - Chart Export",
@@ -186,7 +190,7 @@ export const PROJECTS: ProjectType[] = [
     technologies: ["React", "TypeScript", "Tailwind CSS", "Vite"],
     height: 938,
     width: 2500,
-    image: "images/climate-program.jpeg",
+    image: climateProgramImage,
   },
   {
     title: "Unravel Carbon - Portfolio Module",
@@ -226,7 +230,7 @@ export const PROJECTS: ProjectType[] = [
     technologies: ["React", "TypeScript", "Tailwind CSS", "Vite"],
     height: 1280,
     width: 2048,
-    image: "images/ISSB.webp",
+    image: ISSBImage,
   },
   {
     title: "Unravel Carbon - Assets Management",
