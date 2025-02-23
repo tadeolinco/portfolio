@@ -35,9 +35,11 @@ import films from "../src/baseFilms.json" assert { type: "json" };
     const images = await page.$$eval(
       "#js-poster-col .film-poster.poster img",
       (all_images) => {
-        const image_links = [];
+        const image_links: string[] = [];
         all_images.forEach((image) => {
           if (
+            "src" in image &&
+            typeof image.src === "string" &&
             image.src.startsWith("https://") &&
             image.src.includes("resize")
           ) {

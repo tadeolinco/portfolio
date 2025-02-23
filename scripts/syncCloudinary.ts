@@ -18,13 +18,13 @@ const images = fs.readdirSync("public/images");
 
 // Function to fetch Cloudinary resources
 async function syncFiles() {
-  const resImages = await cloudinary.api.resources({
+  const resImages = (await cloudinary.api.resources({
     max_results: 1000,
-  });
-  const resVideos = await cloudinary.api.resources({
+  })) as { resources: { public_id: string; secure_url: string }[] };
+  const resVideos = (await cloudinary.api.resources({
     max_results: 1000,
     resource_type: "video",
-  });
+  })) as { resources: { public_id: string; secure_url: string }[] };
 
   const resMap: Record<string, string> = {};
 
