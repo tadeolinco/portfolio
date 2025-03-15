@@ -6,6 +6,7 @@ import poster1Iik from "../public/posters/1Iik/poster.jpg";
 import poster1JzG from "../public/posters/1JzG/poster.jpg";
 import poster1NoM from "../public/posters/1NoM/poster.jpg";
 import poster1OEc from "../public/posters/1OEc/poster.jpg";
+import poster1QE4 from "../public/posters/1QE4/poster.jpg";
 import poster1skk from "../public/posters/1skk/poster.jpg";
 import poster1TAY from "../public/posters/1TAY/poster.jpg";
 import poster1Tey from "../public/posters/1Tey/poster.jpg";
@@ -113,6 +114,7 @@ poster1Iik,
 poster1JzG,
 poster1NoM,
 poster1OEc,
+poster1QE4,
 poster1skk,
 poster1TAY,
 poster1Tey,
