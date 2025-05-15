@@ -287,7 +287,7 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <p className="text-lg italic">JS Frontend Engineer</p>
+          <p className="text-lg italic">Frontend Engineer</p>
         </div>
         <div className="flex justify-center gap-2 text-center">
           <a

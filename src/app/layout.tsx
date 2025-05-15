@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <title>Sam Bautista</title>
-      <meta name="description" content="Sam Bautista. JS Frontend Engineer." />
+      <meta name="description" content="Sam Bautista. Frontend Engineer." />
       <body className={`${fireCodeFont.variable} antialiased`}>
         <Suspense>{children}</Suspense>
         <Analytics />
