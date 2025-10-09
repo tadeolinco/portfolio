@@ -1,8 +1,8 @@
 import { StaticImageData } from "next/image";
 import { ReactNode } from "react";
+import ISSBImage from "../../../../public/images/ISSB.webp";
 import climateProgramImage from "../../../../public/images/climate-program.jpeg";
 import dashboardImage from "../../../../public/images/dashboards.jpeg";
-import ISSBImage from "../../../../public/images/ISSB.webp";
 
 export type ProjectType = {
   title: string;
@@ -38,9 +38,9 @@ export const PROJECTS: ProjectType[] = [
     content: (
       <div className="space-y-4 pb-4">
         <p>
-          I&apos;ve always wanted to create a portfolio website, but lacked the
-          inspiration for the design. I wanted a gimmick. I like film, and I
-          just recently watched a{" "}
+          I&apos;ve always wanted to build a portfolio site, but could never
+          nail down a design direction. I needed a gimmick. I like film, and I
+          recently stumbled on a{" "}
           <a
             href="https://www.youtube.com/watch?v=rC0HFwnK_5E&t=156s"
             target="_blank"
@@ -48,63 +48,59 @@ export const PROJECTS: ProjectType[] = [
           >
             YouTube clip
           </a>{" "}
-          of the business card scene in American Psycho. So that was a start.
+          of the business card scene from American Psycho. That felt like a good
+          starting point.
         </p>
         <p>
-          Initially I just had a white version of the center card, and
-          that&apos;s it. Played around with some CSS rotations, some gimmicks
-          with subtitles, but ended up scrapping a lot of the ideas.
+          Started simple—just a white business card in the center. Experimented
+          with CSS rotations and subtitle overlays, but scrapped most of it.
+          Nothing quite clicked.
         </p>
         <p>
-          Took a break and visited Letterboxd, and found out that I could
-          apparently export my personal data. And there it was, a CSV of all my
-          liked films, complete with names and shortlinks to each of their
-          Letterboxd film pages.
+          Then I was browsing Letterboxd and discovered you can export your
+          data. There it was: a CSV of all my liked films, complete with names
+          and shortlinks to their pages. Perfect.
         </p>
         <p>
-          So I built a webscraper using Playwright to automatically get each
-          film&apos;s poster from their site. What better way of making your
-          site pretty than using something that&apos;s already pretty. Made a
-          carousel à la netflix. Then hook up a window resize listener to check
-          the number of carousels to render.
+          Built a web scraper using Playwright to grab each film&apos;s poster.
+          What better way to make a site visually interesting than borrowing
+          from things that are already beautiful? Created a Netflix-style
+          carousel, hooked up a window resize listener to calculate how many
+          rows to render.
         </p>
         <p>
-          Got some feedback that the posters were a bit too distractingly
-          pretty, taking away attention from the important information (which
-          was me).
+          Got feedback that the posters were too distracting—pulling attention
+          away from the actual content (aka me). Fair point.
         </p>
         <p>
-          Played around with some CSS filters until I got a good combination of
-          blur and grayscale to somewhat make them less eye catching, but with
-          the carousel animation and different posters hopefully providing a
-          nice texture to an otherwise boring site. However, that made me sad
-          since the posters also warranted some love. So I brought back its
-          liveliness on hover (interactivity++).
+          Played with CSS filters until I found the right balance of blur and
+          grayscale. Toned down enough to not compete for attention, but still
+          adding nice texture to an otherwise plain site. Made me a bit sad to
+          mute those beautiful posters though, so I brought them back to life on
+          hover. Interactivity++.
         </p>
         <p>
-          I wanted more though. I needed a reason for them to still go back to
-          the card, as they hovering over the posters. Landed with the idea of
-          using the CSS rotations again and using a library (
+          But I wanted more. Needed to give people a reason to look back at the
+          card while they&apos;re hovering over posters. That&apos;s when I got
+          the idea to extract color palettes using{" "}
           <a
             href="https://lokeshdhakar.com/projects/color-thief/"
             target="_blank"
             className="underline"
           >
             color-thief
-          </a>
-          ) to get the color palette of the film poster, and applying that to
-          the card.
+          </a>{" "}
+          and apply them to the card in real-time.
         </p>
         <p>
-          Dominant color on the front card, secondary colors for the succeeding
-          cards behind it, then calculating contrast values to know if the text
-          should be black or white. Then another contrast check among the
-          secondary colors, but now against the chosen text color to use as a
-          accent for the border and my name&apos;s shadow. I especially like how
-          it turned out for Old Boy.
+          Dominant color goes on the front card, secondary colors on the ones
+          behind. Calculate contrast ratios to determine whether text should be
+          black or white. Then another contrast check against the secondary
+          colors to pick an accent for borders and text shadows. The Old Boy
+          poster makes this look especially good.
         </p>
         <p>
-          Heavy insipiration from{" "}
+          Heavy inspiration from{" "}
           <a href="https://rauno.me/" target="_blank" className="underline">
             rauno.me
           </a>
@@ -135,39 +131,37 @@ export const PROJECTS: ProjectType[] = [
     content: (
       <div className="space-y-4 pb-4">
         <p>
-          In Unravel Carbon, at this time, we recently incorporated Improvements
-          Week, in where every quarter, we can work on anything we wanted to
-          improve in the platform, be it small quality-of-life improvements or
-          just addressing tech debt.
+          At Unravel Carbon, we run an Improvements Week every quarter where
+          anyone can work on platform enhancements—everything from small
+          quality-of-life fixes to tackling tech debt. Before each one, we
+          gather feedback from across the company, not just product and
+          engineering.
         </p>
 
         <p>
-          Before we do this event, we usually gather feedback from the other
-          teams, not just product and engineering.
+          One request came from a Sustainability Consultant intern who was
+          struggling with how she had to screenshot charts. When building client
+          reports, she&apos;d take screenshots of our platform charts instead of
+          rebuilding them from exported data. Made sense, but it was
+          tedious—prone to errors and impossible to keep sizes consistent.
         </p>
 
         <p>
-          One such feedback was from one of our Sustainability Consultant
-          interns, who wanted a better way of screenshotting the many charts
-          that we have in the platform. Her use case was that when building
-          sustainability reports for our clients, instead of building the chart
-          herself from our exported data, she would just screenshot our charts
-          from the platform straight up. However, this became tedious as it was
-          prone to error and was hard to make the sizes consistent.
+          We took it on, especially since it was purely frontend work. No
+          backend involvement needed.
         </p>
 
         <p>
-          So the team decided take the request in, especially since this
-          didn&apos;t need effort from backend side.
+          I went all-in on flexibility. Added toggles for everything. Don&apos;t
+          want the chart title? Gone. Borders? Optional. Filters? Your call.
+          Want consistent widths across all exports? Easy. Even threw in an
+          optional delay before the snapshot, so you could capture tooltips or
+          hover states if needed.
         </p>
 
         <p>
-          My approach was that I wanted ultimate flexibility for their exports,
-          so I added a bunch of toggles. Don&apos;t want to include the chart
-          title? Okay. No borders? Sure. No filters? No problem. Consistent
-          widths? EZ. I even added an optional delay to when the picture snaps
-          just in case they wanted to show a tooltip in the exported image, for
-          example.
+          Turned what used to be a frustrating manual process into something
+          actually pleasant to use. Small features, big impact.
         </p>
       </div>
     ),
@@ -305,46 +299,39 @@ export const PROJECTS: ProjectType[] = [
     content: (
       <div className="space-y-4 pb-4">
         <p>
-          I needed to track my own expenses, and what better way to fix my
-          problems than creating my own app.
+          I needed to track my expenses. And what better way to solve your own
+          problems than building your own app?
         </p>
 
         <p>
-          Initially, I tried tracking everything in Google Sheets. The problem
-          there was the UX of inputting new transaction on my phone was that
-          good, and I ended up putting them in once I get home. I then either
-          forgot the things I bought that day, or just forgot to put them in at
-          all.
+          First attempt: Google Sheets. The mobile UX was rough enough that
+          I&apos;d just wait until I got home to input transactions. By then,
+          I&apos;d either forget what I bought or forget to log it entirely.
         </p>
 
         <p>
-          Next, I tried YNAB, and other simple budgetting apps. I found out
-          about myself that I didn&apos;t really want to budget, which is
-          usually a core functionality of these apps. I just wanted to track
-          where I spend my money, and then get insights from that data.
+          Next up: YNAB and similar budgeting apps. Learned pretty quickly that
+          I don&apos;t actually want to budget—which is ironically the core
+          feature of these apps. I just wanted to track where my money goes and
+          extract insights from the data.
         </p>
 
         <p>
-          So my key takeaways from my previous attempts of being more
-          financially responsible was that first, I priorize the ease of use of
-          putting the data in as quickly and conveniently as possible. Second,
-          no budgets - just straight up tracking. For insights, I can make
-          whatever chart I want later on if I see the use case for it.
+          Two key takeaways emerged: First, prioritize speed and ease of input
+          above everything else. Second, skip the budgeting—just track
+          everything and build whatever charts I need later.
         </p>
 
         <p>
-          And then a PWA was made using NextJS, vercel for hosting, and supabase
-          as the database. Didn&apos;t bother buying a domain since I never
-          planned on letting anyone else use it. When I open it up, it goes
-          directly to the create transcation page, and fills up any information
-          that it can already assume from other settings, like currency, current
-          tags, etc. Entering inputs smartly passes the focus onto the next
-          input, and on and on, until it the next enter would submit the
-          transaction altogether. Afterwards, I put my phone away and forget
-          about it.
+          Built a PWA with Next.js, hosted on Vercel, with Supabase as the
+          backend. Never bothered with a domain since it&apos;s just for me.
+          Opens straight to the transaction form, pre-fills everything it can
+          infer (currency, recent tags, etc.). Hit enter, focus jumps to the
+          next field. Keep going until the final enter submits. Phone goes back
+          in pocket, done.
         </p>
 
-        <p>I&apos;ve been using it since May 2022 now.</p>
+        <p>Been using it since May 2022.</p>
       </div>
     ),
   },
