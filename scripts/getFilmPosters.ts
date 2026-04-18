@@ -32,27 +32,26 @@ import films from "../src/baseFilms.json" assert { type: "json" };
     });
     await page.waitForTimeout(3000);
 
-    const images = await page.$$eval(
-      "#js-poster-col .film-poster.poster img",
-      (all_images) => {
-        const image_links: string[] = [];
-        all_images.forEach((image) => {
-          if (
-            "src" in image &&
-            typeof image.src === "string" &&
-            image.src.startsWith("https://") &&
-            image.src.includes("resize")
-          ) {
-            image_links.push(image.src);
-          }
-        });
-        return image_links;
+    const imageUrl = await page.$$eval(
+      "[data-film-id][data-item-slug]",
+      (elements) => {
+        const trailingYear = /-(?:1[89]\d{2}|20\d{2})$/;
+        for (const el of elements) {
+          const filmId = el.getAttribute("data-film-id");
+          const slug = el.getAttribute("data-item-slug");
+          if (!filmId || !slug) continue;
+
+          const slugForUrl = slug.replace(trailingYear, "");
+          const digitPath = filmId.split("").join("/");
+   
+          return `https://a.ltrbxd.com/resized/film-poster/${digitPath}/${filmId}-${slugForUrl}-0-230-0-345-crop.jpg`
+   
+        }
       }
     );
 
-    images.forEach((imageUrl) => {
-      const split = film["Letterboxd URI"].split("/");
-      const path = `./public/posters/${split[split.length - 1]}/poster.jpg`;
+    if (imageUrl) {
+      console.log('Found poster for ', film["Name"], imageUrl);
       fs.mkdirSync(`./public/posters/${split[split.length - 1]}`, {
         recursive: true,
       });
@@ -60,10 +59,10 @@ import films from "../src/baseFilms.json" assert { type: "json" };
       https.get(imageUrl, function (response) {
         response.pipe(file);
       });
-    });
-    if (images.length === 0) {
-      noPosters.push(film["Name"]);
+    } else {
+      console.log('No poster found for ', film["Name"]);
     }
+   
   }
 
   if (noPosters.length > 0) {

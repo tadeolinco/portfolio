@@ -13,7 +13,8 @@
     "get-posters": "node --experimental-transform-types scripts/getFilmPosters.ts",
     "sync-cloud": "node --experimental-transform-types scripts/syncCloudinary.ts",
     "generate-static-imports": "node --experimental-transform-types scripts/generateStaticImports.ts",
-    "sync": "npm run export-data && npm run convert-json && npm run get-posters && npm run generate-static-imports && npm run sync-cloud"
+    "sync": "npm run export-data && npm run convert-json && npm run get-posters && npm run generate-static-imports && npm run sync-cloud",
+    "sync-file": "npm run convert-json && npm run get-posters && npm run generate-static-imports && npm run sync-cloud"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
