@@ -1,9 +1,16 @@
 import fs from "fs";
 import https from "https";
 import playwright from "playwright";
-import films from "../src/baseFilms.json" assert { type: "json" };
+
+const filmsPath = "./src/baseFilms.json";
+
+type FilmRecord = Record<string, string>;
 
 (async () => {
+  const films = JSON.parse(
+    fs.readFileSync(filmsPath, "utf8")
+  ) as FilmRecord[];
+
   const browser = await playwright.chromium.launch();
   const page = await browser.newPage();
 
@@ -17,8 +24,9 @@ import films from "../src/baseFilms.json" assert { type: "json" };
 
     console.log(`${film["Name"]} (${i + 1} of ${films.length})`);
 
-    if (fs.existsSync(path)) {
-      console.log(`${film["Name"]} already exists`);
+    const posterExists = fs.existsSync(path);
+    if (posterExists && "Tagline" in film) {
+      console.log(`${film["Name"]} already has poster and tagline`);
       continue;
     }
 
@@ -32,6 +40,18 @@ import films from "../src/baseFilms.json" assert { type: "json" };
     });
     await page.waitForTimeout(3000);
 
+    const taglineText = await page
+      .$eval("h4.tagline", (el) =>
+        Array.from(el.childNodes)
+          .map((n) => (n.textContent ?? "").trim())
+          .filter(Boolean)
+          .join(" ")
+          .trim()
+      )
+      .catch(() => "");
+
+    film["Tagline"] = taglineText;
+
     const imageUrl = await page.$$eval(
       "[data-film-id][data-item-slug]",
       (elements) => {
@@ -43,26 +63,28 @@ import films from "../src/baseFilms.json" assert { type: "json" };
 
           const slugForUrl = slug.replace(trailingYear, "");
           const digitPath = filmId.split("").join("/");
-   
-          return `https://a.ltrbxd.com/resized/film-poster/${digitPath}/${filmId}-${slugForUrl}-0-230-0-345-crop.jpg`
-   
+
+          return `https://a.ltrbxd.com/resized/film-poster/${digitPath}/${filmId}-${slugForUrl}-0-230-0-345-crop.jpg`;
         }
       }
     );
 
-    if (imageUrl) {
-      console.log('Found poster for ', film["Name"], imageUrl);
-      fs.mkdirSync(`./public/posters/${split[split.length - 1]}`, {
-        recursive: true,
-      });
-      const file = fs.createWriteStream(path);
-      https.get(imageUrl, function (response) {
-        response.pipe(file);
-      });
-    } else {
-      console.log('No poster found for ', film["Name"]);
+    if (!posterExists) {
+      if (imageUrl) {
+        console.log("Found poster for ", film["Name"], imageUrl);
+        fs.mkdirSync(`./public/posters/${split[split.length - 1]}`, {
+          recursive: true,
+        });
+        const file = fs.createWriteStream(path);
+        https.get(imageUrl, function (response) {
+          response.pipe(file);
+        });
+      } else {
+        console.log("No poster found for ", film["Name"]);
+      }
     }
-   
+
+    fs.writeFileSync(filmsPath, JSON.stringify(films, null, 2));
   }
 
   if (noPosters.length > 0) {
