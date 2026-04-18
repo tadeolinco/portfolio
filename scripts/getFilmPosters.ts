@@ -25,8 +25,8 @@ type FilmRecord = Record<string, string>;
     console.log(`${film["Name"]} (${i + 1} of ${films.length})`);
 
     const posterExists = fs.existsSync(path);
-    if (posterExists && "Tagline" in film) {
-      console.log(`${film["Name"]} already has poster and tagline`);
+    if (posterExists && "Tagline" in film && "Backdrop" in film) {
+      console.log(`${film["Name"]} already has poster, tagline, and backdrop`);
       continue;
     }
 
@@ -51,6 +51,12 @@ type FilmRecord = Record<string, string>;
       .catch(() => "");
 
     film["Tagline"] = taglineText;
+
+    const backdropUrl = await page
+      .$eval("[data-backdrop]", (el) => el.getAttribute("data-backdrop") ?? "")
+      .catch(() => "");
+
+    film["Backdrop"] = backdropUrl;
 
     const imageUrl = await page.$$eval(
       "[data-film-id][data-item-slug]",
