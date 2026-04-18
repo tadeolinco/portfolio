@@ -3,7 +3,14 @@
 import { Field, Label, Switch, Transition } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { isMobile } from "react-device-detect";
 import baseFilms from "../baseFilms.json";
 import { PosterBackground } from "../components/PosterBackground";
@@ -41,6 +48,32 @@ export default function Home() {
 
   const taglineDisplayFilm = hoveredFilm ?? staleTaglineFilm;
 
+  const targetBackdrop = taglineDisplayFilm?.Backdrop ?? null;
+  const backdropTopLayerRef = useRef<0 | 1>(0);
+  const [backdropLayers, setBackdropLayers] = useState<
+    [string | null, string | null]
+  >([null, null]);
+  const [backdropTopLayer, setBackdropTopLayer] = useState<0 | 1>(0);
+
+  backdropTopLayerRef.current = backdropTopLayer;
+
+  useEffect(() => {
+    setBackdropLayers((prev) => {
+      const currentTopUrl = prev[backdropTopLayerRef.current];
+      if (targetBackdrop === currentTopUrl) return prev;
+
+      const bottomLayer = backdropTopLayerRef.current === 0 ? 1 : 0;
+      const next: [string | null, string | null] = [...prev];
+      next[bottomLayer] = targetBackdrop;
+
+      requestAnimationFrame(() => {
+        setBackdropTopLayer(bottomLayer as 0 | 1);
+      });
+
+      return next;
+    });
+  }, [targetBackdrop]);
+
   useEffect(() => {
     const maxRotation = 25;
 
@@ -67,6 +100,24 @@ export default function Home() {
       window.removeEventListener("mousemove", mouseCallback);
     };
   }, []);
+
+  const taglineMeasureRef = useRef<HTMLDivElement>(null);
+  const [taglineSize, setTaglineSize] = useState({ w: 0, h: 0 });
+
+  useLayoutEffect(() => {
+    const el = taglineMeasureRef.current;
+    if (!taglineDisplayFilm || !el) {
+      setTaglineSize({ w: 0, h: 0 });
+      return;
+    }
+    const update = () => {
+      setTaglineSize({ w: el.offsetWidth, h: el.offsetHeight });
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [taglineDisplayFilm]);
 
   const { mostContrastingColor, textColor, secondaryColors } = useMemo(() => {
     const textColor: [number, number, number] =
@@ -117,7 +168,7 @@ export default function Home() {
       </div>
       <div
         className={
-          "absolute cursor-pointer select-none " +
+          "absolute cursor-pointer select-none overflow-hidden " +
           (taglineDisplayFilm ? "bg-black p-1" : "h-12 w-12")
         }
         role="button"
@@ -136,7 +187,7 @@ export default function Home() {
         <Transition
           show={hoveredFilm !== null}
           as="div"
-          className="text-center motion-reduce:transition-none"
+          className="relative z-10 overflow-hidden text-center motion-reduce:transition-none"
           enter="transition ease-out duration-300"
           enterFrom="opacity-0 translate-y-2"
           enterTo="opacity-100 translate-y-0"
@@ -150,22 +201,50 @@ export default function Home() {
           }}
         >
           {taglineDisplayFilm ? (
-            <p
-              key={`${taglineDisplayFilm.Name}-${taglineDisplayFilm.Year}`}
-              className="tagline-pop text-white text-xs whitespace-pre"
-              aria-live="polite"
+            <div
+              className="relative overflow-hidden transition-[width,height] duration-300 motion-reduce:transition-none [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]"
+              style={{ width: taglineSize.w, height: taglineSize.h }}
             >
-              {taglineDisplayFilm.Tagline ? (
-                <>
-                  &quot;{taglineDisplayFilm.Tagline}&quot;
-                  <br />- {taglineDisplayFilm.Name} ({taglineDisplayFilm.Year})
-                </>
-              ) : (
-                <>
-                  - {taglineDisplayFilm.Name} ({taglineDisplayFilm.Year})
-                </>
-              )}
-            </p>
+              <div
+                ref={taglineMeasureRef}
+                className="absolute left-0 top-0 flex min-h-40 max-w-sm w-max flex-col justify-end overflow-hidden p-4 text-center"
+              >
+                <div
+                  className="absolute inset-0 z-0 pointer-events-none motion-reduce:transition-none"
+                  aria-hidden
+                >
+                  {[0, 1].map((i) => (
+                    <div
+                      key={i}
+                      className="absolute inset-0 bg-center bg-cover bg-no-repeat transition-opacity ease-out duration-300 motion-reduce:transition-none"
+                      style={{
+                        backgroundImage: backdropLayers[i]
+                          ? `url("${backdropLayers[i]}")`
+                          : undefined,
+                        opacity: backdropTopLayer === i ? 1 : 0,
+                      }}
+                    />
+                  ))}
+                </div>
+                <p
+                  key={`${taglineDisplayFilm.Name}-${taglineDisplayFilm.Year}`}
+                  className="tagline-pop relative z-10 text-white text-xs"
+                  aria-live="polite"
+                >
+                  {taglineDisplayFilm.Tagline ? (
+                    <>
+                      {taglineDisplayFilm.Tagline}
+                      <br />- {taglineDisplayFilm.Name} (
+                      {taglineDisplayFilm.Year})
+                    </>
+                  ) : (
+                    <>
+                      - {taglineDisplayFilm.Name} ({taglineDisplayFilm.Year})
+                    </>
+                  )}
+                </p>
+              </div>
+            </div>
           ) : null}
         </Transition>
       </div>
