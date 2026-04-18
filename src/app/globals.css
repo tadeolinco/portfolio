@@ -42,3 +42,24 @@ body {
     transform: translateX(0);
   }
 }
+
+@keyframes tagline-pop {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tagline-pop {
+  animation: tagline-pop 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tagline-pop {
+    animation: none;
+  }
+}

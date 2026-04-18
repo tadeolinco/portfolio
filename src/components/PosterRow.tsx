@@ -5,15 +5,18 @@ import { isMobile } from "react-device-detect";
 import baseFilms from "../baseFilms.json";
 import { cdn } from "../staticImports";
 
+type FilmEntry = (typeof baseFilms)[number];
+
 type PosterRowProps = {
   startIndex: number;
   isReverse: boolean;
   stopBlur: boolean;
   stopGrayscale: boolean;
   onChangePalette: (palette: [number, number, number][]) => void;
+  onFilmHover?: (film: FilmEntry | null) => void;
 };
 
-function shuffleArray(array: (typeof baseFilms)[number][]) {
+function shuffleArray(array: FilmEntry[]) {
   // Create a clone of the array
   const clonedArray = [...array];
 
@@ -34,10 +37,7 @@ const colorThief = new ColorThief();
 function UnmemoizedPosterRow(props: PosterRowProps) {
   const films = useRef(shuffleArray(baseFilms));
 
-  const handleChangePalette = (
-    film: (typeof baseFilms)[number],
-    element: HTMLImageElement
-  ) => {
+  const handleChangePalette = (film: FilmEntry, element: HTMLImageElement) => {
     if (!element) return;
     try {
       const palette = colorThief.getPalette(element, 4);
@@ -47,8 +47,10 @@ function UnmemoizedPosterRow(props: PosterRowProps) {
       } else {
         props.onChangePalette(
           [mainColor].concat(
-            palette.filter((color) => color.every((c, i) => c !== mainColor[i]))
-          )
+            palette.filter((color) =>
+              color.every((c, i) => c !== mainColor[i]),
+            ),
+          ),
         );
       }
     } catch (err) {
@@ -98,7 +100,11 @@ function UnmemoizedPosterRow(props: PosterRowProps) {
             }
             crossOrigin="anonymous"
             onPointerEnter={(event) => {
+              props.onFilmHover?.(film);
               handleChangePalette(film, event.target as HTMLImageElement);
+            }}
+            onPointerLeave={() => {
+              props.onFilmHover?.(null);
             }}
             onPointerDown={(event) => {
               event.currentTarget.releasePointerCapture(event.pointerId);
@@ -127,6 +133,7 @@ function UnmemoizedPosterRow(props: PosterRowProps) {
 export const PosterRow = memo(UnmemoizedPosterRow, (prevProps, nextProps) => {
   return (
     prevProps.stopBlur === nextProps.stopBlur &&
-    prevProps.stopGrayscale === nextProps.stopGrayscale
+    prevProps.stopGrayscale === nextProps.stopGrayscale &&
+    prevProps.onFilmHover === nextProps.onFilmHover
   );
 });

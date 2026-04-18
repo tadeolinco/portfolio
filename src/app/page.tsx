@@ -1,12 +1,15 @@
 "use client";
 
-import { Field, Label, Switch } from "@headlessui/react";
+import { Field, Label, Switch, Transition } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
+import baseFilms from "../baseFilms.json";
 import { PosterBackground } from "../components/PosterBackground";
 import { findMostContrastingColor } from "../utils";
+
+type FilmEntry = (typeof baseFilms)[number];
 
 export default function Home() {
   const [stopBlur, setStopBlur] = useState(false);
@@ -16,6 +19,27 @@ export default function Home() {
     [255, 255, 255],
   ]);
   const [thickness, setThickness] = useState(3);
+  const [hoveredFilm, setHoveredFilm] = useState<FilmEntry | null>(null);
+  const [staleTaglineFilm, setStaleTaglineFilm] = useState<FilmEntry | null>(
+    null,
+  );
+  const hoveredFilmRef = useRef<FilmEntry | null>(null);
+
+  const onFilmHover = useCallback((film: FilmEntry | null) => {
+    setHoveredFilm(film);
+  }, []);
+
+  useEffect(() => {
+    hoveredFilmRef.current = hoveredFilm;
+  }, [hoveredFilm]);
+
+  useEffect(() => {
+    if (hoveredFilm !== null) {
+      setStaleTaglineFilm(hoveredFilm);
+    }
+  }, [hoveredFilm]);
+
+  const taglineDisplayFilm = hoveredFilm ?? staleTaglineFilm;
 
   useEffect(() => {
     const maxRotation = 25;
@@ -66,7 +90,7 @@ export default function Home() {
 
     const mostContrastingColor = findMostContrastingColor(
       secondaryColorsNotNearMain,
-      textColor
+      textColor,
     );
 
     return { mostContrastingColor, textColor, secondaryColors };
@@ -92,24 +116,58 @@ export default function Home() {
         </p>
       </div>
       <div
-        className="absolute bg-black cursor-pointer select-none p-1"
+        className={
+          "absolute cursor-pointer select-none " +
+          (taglineDisplayFilm ? "bg-black p-1" : "h-12 w-12")
+        }
         role="button"
         style={{ bottom: 50, zIndex: 9999 }}
         onClick={() => {
           if (thickness > 20) {
             window.open(
               "https://youtu.be/rC0HFwnK_5E?si=3nYzRDxDXdaqjVHD&t=156",
-              "_blank"
+              "_blank",
             );
           } else {
             setThickness(thickness + 1);
           }
         }}
       >
-        <p className="text-white text-xs whitespace-pre text-center">
-          &quot;The tasteful thickness of it&quot;
-          <br />- American Psycho (2000)
-        </p>
+        <Transition
+          show={hoveredFilm !== null}
+          as="div"
+          className="text-center motion-reduce:transition-none"
+          enter="transition ease-out duration-300"
+          enterFrom="opacity-0 translate-y-2"
+          enterTo="opacity-100 translate-y-0"
+          leave="transition ease-in duration-200"
+          leaveFrom="opacity-100 translate-y-0"
+          leaveTo="opacity-0 translate-y-1"
+          afterLeave={() => {
+            if (!hoveredFilmRef.current) {
+              setStaleTaglineFilm(null);
+            }
+          }}
+        >
+          {taglineDisplayFilm ? (
+            <p
+              key={`${taglineDisplayFilm.Name}-${taglineDisplayFilm.Year}`}
+              className="tagline-pop text-white text-xs whitespace-pre"
+              aria-live="polite"
+            >
+              {taglineDisplayFilm.Tagline ? (
+                <>
+                  &quot;{taglineDisplayFilm.Tagline}&quot;
+                  <br />- {taglineDisplayFilm.Name} ({taglineDisplayFilm.Year})
+                </>
+              ) : (
+                <>
+                  - {taglineDisplayFilm.Name} ({taglineDisplayFilm.Year})
+                </>
+              )}
+            </p>
+          ) : null}
+        </Transition>
       </div>
       <div className="top-0 absolute right-0 z-10 bg-black p-2 rounded-bl-md">
         <Field className="flex items-center">
@@ -155,6 +213,7 @@ export default function Home() {
           console.log(s);
           setPalette(s);
         }}
+        onFilmHover={onFilmHover}
       />
       {Array.from({ length: thickness }).map((_, index, array) => {
         const color = secondaryColors[(index + 1) % secondaryColors.length];

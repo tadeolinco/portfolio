@@ -2,16 +2,20 @@ import { useEffect, useState } from "react";
 import baseFilms from "../baseFilms.json";
 import { PosterRow } from "./PosterRow";
 
+type FilmEntry = (typeof baseFilms)[number];
+
 type PosterBackgroundProps = {
   stopBlur: boolean;
   stopGrayscale: boolean;
   onChangePalette: (palette: [number, number, number][]) => void;
+  onFilmHover?: (film: FilmEntry | null) => void;
 };
 
 export function PosterBackground({
   stopBlur,
   stopGrayscale,
   onChangePalette,
+  onFilmHover,
 }: PosterBackgroundProps) {
   const [rows, setRows] = useState(0);
 
@@ -45,6 +49,7 @@ export function PosterBackground({
             stopBlur={stopBlur}
             stopGrayscale={stopGrayscale}
             onChangePalette={onChangePalette}
+            onFilmHover={onFilmHover}
           />
         ))}
       </div>
