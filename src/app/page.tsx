@@ -1,7 +1,7 @@
 "use client";
 
 import { Field, Label, Switch, Transition } from "@headlessui/react";
-import Image from "next/image";
+import NextImage from "next/image";
 import Link from "next/link";
 import {
   useCallback,
@@ -58,20 +58,49 @@ export default function Home() {
   backdropTopLayerRef.current = backdropTopLayer;
 
   useEffect(() => {
-    setBackdropLayers((prev) => {
-      const currentTopUrl = prev[backdropTopLayerRef.current];
-      if (targetBackdrop === currentTopUrl) return prev;
+    if (targetBackdrop == null || targetBackdrop === "") {
+      setBackdropLayers([null, null]);
+      setBackdropTopLayer(0);
+      return;
+    }
 
-      const bottomLayer = backdropTopLayerRef.current === 0 ? 1 : 0;
-      const next: [string | null, string | null] = [...prev];
-      next[bottomLayer] = targetBackdrop;
+    let cancelled = false;
 
-      requestAnimationFrame(() => {
-        setBackdropTopLayer(bottomLayer as 0 | 1);
+    const commitBackdrop = (url: string) => {
+      if (cancelled) return;
+      setBackdropLayers((prev) => {
+        const top = backdropTopLayerRef.current;
+        const currentTopUrl = prev[top];
+        if (url === currentTopUrl) return prev;
+
+        if (currentTopUrl == null || currentTopUrl === "") {
+          const next: [string | null, string | null] = [...prev];
+          next[top] = url;
+          return next;
+        }
+
+        const bottomLayer = top === 0 ? 1 : 0;
+        const next: [string | null, string | null] = [...prev];
+        next[bottomLayer] = url;
+
+        requestAnimationFrame(() => {
+          if (!cancelled) setBackdropTopLayer(bottomLayer as 0 | 1);
+        });
+
+        return next;
       });
+    };
 
-      return next;
-    });
+    const img = new window.Image();
+    const finish = () => commitBackdrop(targetBackdrop);
+    img.onload = finish;
+    img.onerror = finish;
+    img.src = targetBackdrop;
+    if (img.complete && img.naturalWidth > 0) finish();
+
+    return () => {
+      cancelled = true;
+    };
   }, [targetBackdrop]);
 
   useEffect(() => {
@@ -111,12 +140,21 @@ export default function Home() {
       return;
     }
     const update = () => {
-      setTaglineSize({ w: el.offsetWidth, h: el.offsetHeight });
+      const r = el.getBoundingClientRect();
+      setTaglineSize({
+        w: Math.round(r.width),
+        h: Math.round(r.height),
+      });
     };
     update();
+    // One frame retry: parent may be 0×0 on first layout pass before size state applies.
+    const raf = requestAnimationFrame(update);
     const ro = new ResizeObserver(update);
     ro.observe(el);
-    return () => ro.disconnect();
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+    };
   }, [taglineDisplayFilm]);
 
   const { mostContrastingColor, textColor, secondaryColors } = useMemo(() => {
@@ -203,28 +241,48 @@ export default function Home() {
           {taglineDisplayFilm ? (
             <div
               className="relative overflow-hidden transition-[width,height] duration-300 motion-reduce:transition-none [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]"
-              style={{ width: taglineSize.w, height: taglineSize.h }}
+              style={{
+                width: taglineSize.w > 0 ? taglineSize.w : undefined,
+                height: taglineSize.h > 0 ? taglineSize.h : undefined,
+                minHeight: taglineSize.h > 0 ? undefined : "10rem",
+                minWidth:
+                  taglineSize.w > 0 ? undefined : "min(24rem, 100vw - 2rem)",
+              }}
             >
               <div
                 ref={taglineMeasureRef}
-                className="absolute left-0 top-0 flex min-h-40 max-w-sm w-max flex-col justify-end overflow-hidden p-4 text-center"
+                className="absolute left-0 top-0 flex min-h-[8rem] max-w-sm w-max flex-col justify-end overflow-hidden p-4 text-center"
               >
                 <div
                   className="absolute inset-0 z-0 pointer-events-none motion-reduce:transition-none"
                   aria-hidden
                 >
-                  {[0, 1].map((i) => (
-                    <div
-                      key={i}
-                      className="absolute inset-0 bg-center bg-cover bg-no-repeat transition-opacity ease-out duration-300 motion-reduce:transition-none"
-                      style={{
-                        backgroundImage: backdropLayers[i]
-                          ? `url("${backdropLayers[i]}")`
-                          : undefined,
-                        opacity: backdropTopLayer === i ? 1 : 0,
-                      }}
-                    />
-                  ))}
+                  {[0, 1].map((i) => {
+                    const url = backdropLayers[i];
+                    if (!url) {
+                      return (
+                        <div
+                          key={`layer-${i}`}
+                          className="absolute inset-0"
+                          aria-hidden
+                        />
+                      );
+                    }
+                    return (
+                      <NextImage
+                        key={`${i}-${url}`}
+                        src={url}
+                        alt=""
+                        fill
+                        unoptimized
+                        sizes="(max-width: 640px) 100vw, 24rem"
+                        className="object-cover object-center transition-opacity ease-out duration-300 motion-reduce:transition-none"
+                        style={{
+                          opacity: backdropTopLayer === i ? 1 : 0,
+                        }}
+                      />
+                    );
+                  })}
                 </div>
                 <p
                   key={`${taglineDisplayFilm.Name}-${taglineDisplayFilm.Year}`}
@@ -385,7 +443,7 @@ export default function Home() {
               role="button"
               className="rounded-full p-1 min-w-8 hover:bg-gray-200"
             >
-              <Image
+              <NextImage
                 src="https://a.ltrbxd.com/logos/letterboxd-decal-dots-pos-rgb-500px.png"
                 className="w-6 min-w-6 h-6"
                 alt="Letterboxd"

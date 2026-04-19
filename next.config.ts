@@ -16,6 +16,12 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/logos/**",
       },
+      {
+        protocol: "https",
+        hostname: "a.ltrbxd.com",
+        port: "",
+        pathname: "/resized/**",
+      },
     ],
   },
 };
