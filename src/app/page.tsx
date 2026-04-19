@@ -169,6 +169,42 @@ export default function Home() {
     return { mostContrastingColor, textColor, secondaryColors };
   }, [palette]);
 
+  const taglineChipMeasureRef = useRef<HTMLDivElement>(null);
+  const [taglineChipSize, setTaglineChipSize] = useState({ w: 0, h: 0 });
+
+  useLayoutEffect(() => {
+    if (!taglineDisplayFilm) {
+      setTaglineChipSize({ w: 0, h: 0 });
+      return;
+    }
+    const el = taglineChipMeasureRef.current;
+    if (!el) return;
+
+    const update = () => {
+      const r = el.getBoundingClientRect();
+      const w = Math.round(r.width);
+      const h = Math.round(r.height);
+      if (w <= 0 || h <= 0) return;
+      setTaglineChipSize((prev) =>
+        prev.w === w && prev.h === h ? prev : { w, h },
+      );
+    };
+
+    update();
+    const raf = requestAnimationFrame(update);
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+    };
+  }, [
+    taglineDisplayFilm,
+    taglineDisplayFilm?.Name,
+    taglineDisplayFilm?.Year,
+    taglineDisplayFilm?.Tagline,
+  ]);
+
   return (
     <div className="min-h-dvh flex flex-col items-center justify-center bg-black relative">
       {/* <div className="bottom-0 absolute right-0 z-10 bg-black p-1 rounded-tl-md">
@@ -223,58 +259,69 @@ export default function Home() {
           }}
         >
           {taglineDisplayFilm ? (
-            <div className="relative flex min-h-[8rem] w-fit max-w-sm flex-col justify-end overflow-hidden p-4 text-center transition-[width,height,opacity] duration-300 motion-reduce:transition-none [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]">
+            <div
+              className="inline-block overflow-hidden align-top transition-[width,height] duration-300 motion-reduce:transition-none [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]"
+              style={{
+                width: taglineChipSize.w > 0 ? taglineChipSize.w : undefined,
+                height: taglineChipSize.h > 0 ? taglineChipSize.h : undefined,
+              }}
+            >
               <div
-                className="absolute inset-0 z-0 overflow-hidden pointer-events-none motion-reduce:transition-none"
-                aria-hidden
+                ref={taglineChipMeasureRef}
+                className="relative flex min-h-[8rem] w-max max-w-sm flex-col justify-end overflow-hidden p-4 text-center box-border"
               >
-                <div className="relative h-full w-full">
-                  {[0, 1].map((i) => {
-                    const url = backdropLayers[i];
-                    if (!url) {
+                <div
+                  className="absolute inset-0 z-0 overflow-hidden pointer-events-none motion-reduce:transition-none"
+                  aria-hidden
+                >
+                  <div className="relative h-full w-full">
+                    {[0, 1].map((i) => {
+                      const url = backdropLayers[i];
+                      if (!url) {
+                        return (
+                          <div
+                            key={`layer-${i}`}
+                            className="absolute inset-0"
+                            aria-hidden
+                          />
+                        );
+                      }
                       return (
-                        <div
-                          key={`layer-${i}`}
-                          className="absolute inset-0"
-                          aria-hidden
+                        <NextImage
+                          key={`${i}-${url}`}
+                          src={url}
+                          alt=""
+                          fill
+                          unoptimized
+                          loading="eager"
+                          sizes="(max-width: 640px) 100vw, 24rem"
+                          className="object-cover object-center transition-opacity ease-out duration-300 motion-reduce:transition-none"
+                          style={{
+                            opacity: backdropTopLayer === i ? 1 : 0,
+                          }}
                         />
                       );
-                    }
-                    return (
-                      <NextImage
-                        key={`${i}-${url}`}
-                        src={url}
-                        alt=""
-                        fill
-                        unoptimized
-                        loading="eager"
-                        sizes="(max-width: 640px) 100vw, 24rem"
-                        className="object-cover object-center transition-opacity ease-out duration-300 motion-reduce:transition-none"
-                        style={{
-                          opacity: backdropTopLayer === i ? 1 : 0,
-                        }}
-                      />
-                    );
-                  })}
+                    })}
+                  </div>
                 </div>
+                <p
+                  key={`${taglineDisplayFilm.Name}-${taglineDisplayFilm.Year}`}
+                  className="tagline-pop relative z-10 text-white text-xs"
+                  aria-live="polite"
+                >
+                  {taglineDisplayFilm.Tagline ? (
+                    <>
+                      {taglineDisplayFilm.Tagline}
+                      <br />- {taglineDisplayFilm.Name} (
+                      {taglineDisplayFilm.Year})
+                    </>
+                  ) : (
+                    <>
+                      - {taglineDisplayFilm.Name} ({taglineDisplayFilm.Year})
+                    </>
+                  )}
+                </p>
               </div>
-              <p
-                key={`${taglineDisplayFilm.Name}-${taglineDisplayFilm.Year}`}
-                className="tagline-pop relative z-10 text-white text-xs"
-                aria-live="polite"
-              >
-                {taglineDisplayFilm.Tagline ? (
-                  <>
-                    {taglineDisplayFilm.Tagline}
-                    <br />- {taglineDisplayFilm.Name} ({taglineDisplayFilm.Year}
-                    )
-                  </>
-                ) : (
-                  <>
-                    - {taglineDisplayFilm.Name} ({taglineDisplayFilm.Year})
-                  </>
-                )}
-              </p>
             </div>
           ) : null}
         </Transition>
