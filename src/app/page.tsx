@@ -57,31 +57,43 @@ export default function Home() {
 
   backdropTopLayerRef.current = backdropTopLayer;
 
-  useEffect(() => {
+  // First show (nothing → URL): commit in layout so the image mounts in the same
+  // frame as the tagline panel, before paint. Crossfades stay async (preload below).
+  useLayoutEffect(() => {
     if (targetBackdrop == null || targetBackdrop === "") {
       setBackdropLayers([null, null]);
       setBackdropTopLayer(0);
       return;
     }
 
+    setBackdropLayers((prev) => {
+      const top = backdropTopLayerRef.current;
+      const currentTopUrl = prev[top];
+      if (targetBackdrop === currentTopUrl) return prev;
+      if (currentTopUrl != null && currentTopUrl !== "") return prev;
+
+      const next: [string | null, string | null] = [...prev];
+      next[top] = targetBackdrop;
+      return next;
+    });
+  }, [targetBackdrop]);
+
+  useEffect(() => {
+    if (targetBackdrop == null || targetBackdrop === "") return;
+
     let cancelled = false;
 
-    const commitBackdrop = (url: string) => {
+    const stageCrossfade = () => {
       if (cancelled) return;
       setBackdropLayers((prev) => {
         const top = backdropTopLayerRef.current;
         const currentTopUrl = prev[top];
-        if (url === currentTopUrl) return prev;
-
-        if (currentTopUrl == null || currentTopUrl === "") {
-          const next: [string | null, string | null] = [...prev];
-          next[top] = url;
-          return next;
-        }
+        if (currentTopUrl == null || currentTopUrl === "") return prev;
+        if (targetBackdrop === currentTopUrl) return prev;
 
         const bottomLayer = top === 0 ? 1 : 0;
         const next: [string | null, string | null] = [...prev];
-        next[bottomLayer] = url;
+        next[bottomLayer] = targetBackdrop;
 
         requestAnimationFrame(() => {
           if (!cancelled) setBackdropTopLayer(bottomLayer as 0 | 1);
@@ -92,11 +104,10 @@ export default function Home() {
     };
 
     const img = new window.Image();
-    const finish = () => commitBackdrop(targetBackdrop);
-    img.onload = finish;
-    img.onerror = finish;
+    img.onload = stageCrossfade;
+    img.onerror = stageCrossfade;
     img.src = targetBackdrop;
-    if (img.complete && img.naturalWidth > 0) finish();
+    if (img.complete && img.naturalWidth > 0) stageCrossfade();
 
     return () => {
       cancelled = true;
@@ -129,33 +140,6 @@ export default function Home() {
       window.removeEventListener("mousemove", mouseCallback);
     };
   }, []);
-
-  const taglineMeasureRef = useRef<HTMLDivElement>(null);
-  const [taglineSize, setTaglineSize] = useState({ w: 0, h: 0 });
-
-  useLayoutEffect(() => {
-    const el = taglineMeasureRef.current;
-    if (!taglineDisplayFilm || !el) {
-      setTaglineSize({ w: 0, h: 0 });
-      return;
-    }
-    const update = () => {
-      const r = el.getBoundingClientRect();
-      setTaglineSize({
-        w: Math.round(r.width),
-        h: Math.round(r.height),
-      });
-    };
-    update();
-    // One frame retry: parent may be 0×0 on first layout pass before size state applies.
-    const raf = requestAnimationFrame(update);
-    const ro = new ResizeObserver(update);
-    ro.observe(el);
-    return () => {
-      cancelAnimationFrame(raf);
-      ro.disconnect();
-    };
-  }, [taglineDisplayFilm]);
 
   const { mostContrastingColor, textColor, secondaryColors } = useMemo(() => {
     const textColor: [number, number, number] =
@@ -239,24 +223,12 @@ export default function Home() {
           }}
         >
           {taglineDisplayFilm ? (
-            <div
-              className="relative overflow-hidden transition-[width,height] duration-300 motion-reduce:transition-none [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]"
-              style={{
-                width: taglineSize.w > 0 ? taglineSize.w : undefined,
-                height: taglineSize.h > 0 ? taglineSize.h : undefined,
-                minHeight: taglineSize.h > 0 ? undefined : "10rem",
-                minWidth:
-                  taglineSize.w > 0 ? undefined : "min(24rem, 100vw - 2rem)",
-              }}
-            >
+            <div className="relative flex min-h-[8rem] w-fit max-w-sm flex-col justify-end overflow-hidden p-4 text-center transition-[width,height,opacity] duration-300 motion-reduce:transition-none [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]">
               <div
-                ref={taglineMeasureRef}
-                className="absolute left-0 top-0 flex min-h-[8rem] max-w-sm w-max flex-col justify-end overflow-hidden p-4 text-center"
+                className="absolute inset-0 z-0 overflow-hidden pointer-events-none motion-reduce:transition-none"
+                aria-hidden
               >
-                <div
-                  className="absolute inset-0 z-0 pointer-events-none motion-reduce:transition-none"
-                  aria-hidden
-                >
+                <div className="relative h-full w-full">
                   {[0, 1].map((i) => {
                     const url = backdropLayers[i];
                     if (!url) {
@@ -275,6 +247,7 @@ export default function Home() {
                         alt=""
                         fill
                         unoptimized
+                        loading="eager"
                         sizes="(max-width: 640px) 100vw, 24rem"
                         className="object-cover object-center transition-opacity ease-out duration-300 motion-reduce:transition-none"
                         style={{
@@ -284,24 +257,24 @@ export default function Home() {
                     );
                   })}
                 </div>
-                <p
-                  key={`${taglineDisplayFilm.Name}-${taglineDisplayFilm.Year}`}
-                  className="tagline-pop relative z-10 text-white text-xs"
-                  aria-live="polite"
-                >
-                  {taglineDisplayFilm.Tagline ? (
-                    <>
-                      {taglineDisplayFilm.Tagline}
-                      <br />- {taglineDisplayFilm.Name} (
-                      {taglineDisplayFilm.Year})
-                    </>
-                  ) : (
-                    <>
-                      - {taglineDisplayFilm.Name} ({taglineDisplayFilm.Year})
-                    </>
-                  )}
-                </p>
               </div>
+              <p
+                key={`${taglineDisplayFilm.Name}-${taglineDisplayFilm.Year}`}
+                className="tagline-pop relative z-10 text-white text-xs"
+                aria-live="polite"
+              >
+                {taglineDisplayFilm.Tagline ? (
+                  <>
+                    {taglineDisplayFilm.Tagline}
+                    <br />- {taglineDisplayFilm.Name} ({taglineDisplayFilm.Year}
+                    )
+                  </>
+                ) : (
+                  <>
+                    - {taglineDisplayFilm.Name} ({taglineDisplayFilm.Year})
+                  </>
+                )}
+              </p>
             </div>
           ) : null}
         </Transition>
