@@ -2,11 +2,23 @@ export type JobBullet =
   | string
   | { intro: string; subItems: string[] };
 
+export type JobRole = {
+  title: string;
+  period: string;
+  /** ISO 8601 calendar date (YYYY-MM-DD) for structured data and parsers */
+  startDate: string;
+  /** End date, or `null` if current; ISO 8601 (YYYY-MM-DD) */
+  endDate: string | null;
+};
+
 export type JobEntry = {
   company: string;
-  roles: { title: string; period: string }[];
+  roles: JobRole[];
   bullets: JobBullet[];
 };
+
+/** Public URL of this page (for JSON-LD, Open Graph, canonical) */
+export const resumePageUrl = "https://tadeolinco.dev/resume" as const;
 
 export type SideProject = {
   title: string;
@@ -33,28 +45,48 @@ export const resume = {
     {
       company: "Unravel Carbon",
       roles: [
-        { title: "Senior Frontend Engineer", period: "April 2024 – present" },
-        { title: "Frontend Engineer", period: "November 2022 – April 2024" },
+        {
+          title: "Senior Frontend Engineer",
+          period: "April 2024 – present",
+          startDate: "2024-04-01",
+          endDate: null,
+        },
+        {
+          title: "Frontend Engineer",
+          period: "November 2022 – April 2024",
+          startDate: "2022-11-01",
+          endDate: "2024-04-01",
+        },
       ],
       bullets: [
-        "Developed features for a carbon accounting and decarbonization platform such as a revamped dashboard with exportable charts, facility comparison tool, climate program tool, portfolio management, intensity metrics management, data input tooling, data history, world’s first AI-assisted regulatory reporting framework (ISSB), asset registry, data export and auditing, ESG tooling, product carbon footprint tooling, feature flags.",
         {
           intro:
-            "Took initiatives outside of the product roadmap to improve the platform.",
+            "Shipped three flagship features on a React + Vite + GraphQL carbon accounting platform.",
           subItems: [
-            "Revamped company structure UI after customer feedback that it was harder to navigate and search with larger company structures.",
-            "A “What’s new?” banner to educate users about new features in the platform.",
-            "Quick search (⌘K) so power users can navigate a growing feature set more easily.",
+            "Data driller + audit trail — filterable / exportable data exploration and full activity log for data-heavy customers.",
+            "Agents + AI — streaming chat, tool-use artifacts, and gating across agents dashboard, data review v2 + Unravel AI, and phase 1.2.",
+            "Custom charts and dashboards — AI-assisted charts, drag-and-drop layout, and access controls.",
           ],
         },
-        "Upheld a strong product mindset in a fast-paced environment where requirements are always changing.",
-        "Mentored other engineers for best practices in React.",
+        {
+          intro: "Drove self-initiated platform work.",
+          subItems: [
+            "Version check — Vercel API + client prompt for stale cache; version bumps via Husky.",
+            "Bug reports — in-app form with session recording, auto-filled context, webhook to backend.",
+            "TypeScript — strict checks repo-wide; merged duplicate components into shared packages (~10.5k lines removed).",
+          ],
+        },
       ],
     },
     {
       company: "Pomelo Pay",
       roles: [
-        { title: "Senior Frontend Engineer", period: "August 2022 – October 2022" },
+        {
+          title: "Senior Frontend Engineer",
+          period: "August 2022 – October 2022",
+          startDate: "2022-08-01",
+          endDate: "2022-10-01",
+        },
       ],
       bullets: [
         "Updated legacy Redux to use more modern approaches for global state.",
@@ -63,7 +95,14 @@ export const resume = {
     },
     {
       company: "OOZOU",
-      roles: [{ title: "Full-stack Engineer", period: "September 2021 – August 2022" }],
+      roles: [
+        {
+          title: "Full-stack Engineer",
+          period: "September 2021 – August 2022",
+          startDate: "2021-09-01",
+          endDate: "2022-08-01",
+        },
+      ],
       bullets: [
         "Worked as a full-stack engineer on a client’s revamped learning management system.",
         "Used NextJS and NestJS to translate technical requirements from JIRA into new features, mostly for their admin CMS, course management platform, course session bookings, and email/notifications CMS.",
@@ -71,7 +110,14 @@ export const resume = {
     },
     {
       company: "eFeed",
-      roles: [{ title: "Product Engineer", period: "December 2020 – September 2021" }],
+      roles: [
+        {
+          title: "Product Engineer",
+          period: "December 2020 – September 2021",
+          startDate: "2020-12-01",
+          endDate: "2021-09-01",
+        },
+      ],
       bullets: [
         "Very early-stage startup aggregating third-party data from different apps as feeds, with supplementary features for a collaborative workflow.",
         "Implemented features such as rich text chat using SlateJS and Pusher, a Trello-like kanban for feed items from third-party apps, reminders, and activities.",
@@ -79,7 +125,14 @@ export const resume = {
     },
     {
       company: "Insync",
-      roles: [{ title: "Lead UI Engineer", period: "July 2019 – December 2020" }],
+      roles: [
+        {
+          title: "Lead UI Engineer",
+          period: "July 2019 – December 2020",
+          startDate: "2019-07-01",
+          endDate: "2020-12-01",
+        },
+      ],
       bullets: [
         "Refactored 5+ year old code to modern React/JavaScript standards, enabling window resizing, responsive layouts, and significant performance gains (virtualization).",
         "Led a rehaul of the frontend using TypeScript and automated testing for higher confidence, plus state management practices to minimize unnecessary re-renders.",
@@ -88,7 +141,12 @@ export const resume = {
     {
       company: "Stratpoint",
       roles: [
-        { title: "Frontend Software Developer", period: "July 2018 – July 2019" },
+        {
+          title: "Frontend Software Developer",
+          period: "July 2018 – July 2019",
+          startDate: "2018-07-01",
+          endDate: "2019-07-01",
+        },
       ],
       bullets: [
         "Built and maintained customized CMS-like admin dashboards for Globe, one of the Philippines’ major telecommunications companies, using ReactJS.",
