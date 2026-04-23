@@ -67,17 +67,17 @@ export const resume = {
       bullets: [
         {
           intro:
-            "Shipped three flagship features on a React + Vite + GraphQL carbon accounting platform.",
+            "Shipped flagship product work on a React + Vite + GraphQL carbon accounting platform, including:",
           subItems: [
             "Data driller + audit trail: filterable / exportable data exploration and full activity log for data-heavy customers.",
-            "Agents + AI: streaming chat, tool-use artifacts, and gating across agents dashboard, data review v2 + Unravel AI, and phase 1.2.",
+            "Agents + AI: streaming chat, tool-use artifacts, and gating across the agents dashboard, data review, and company AI experiences.",
             "Custom charts and dashboards: AI-assisted charts, drag-and-drop layout, and access controls.",
           ],
         },
         {
           intro: "Drove self-initiated platform work.",
           subItems: [
-            "Version check: Vercel API + client prompt for stale cache; version bumps via Husky.",
+            "Deploy freshness: Vercel API + client prompt when bundles are stale; release automation with Husky.",
             "Bug reports: in-app form with session recording, auto-filled context, webhook to backend.",
             "TypeScript: strict checks repo-wide; merged duplicate components into shared packages (~10.5k lines removed).",
           ],

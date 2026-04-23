@@ -138,8 +138,8 @@ export default function ResumePage() {
         Skip to content
       </a>
 
-      <div className="mx-auto max-w-2xl px-5 py-8 sm:px-8 sm:py-10">
-        <div className="mb-1 flex justify-end">
+      <div className="mx-auto max-w-2xl px-5 py-8 print:pt-0 sm:px-8 sm:py-10">
+        <div className="mb-1 flex justify-end print:hidden">
           <Link
             href="/"
             className="text-sm text-stone-700 underline-offset-4 transition hover:text-stone-900 hover:underline"
@@ -148,169 +148,174 @@ export default function ResumePage() {
           </Link>
         </div>
 
-        <main id="main" className="relative space-y-8">
+        <main id="main" className="relative">
           <div
             className="absolute -left-px top-0 hidden h-full w-px bg-gradient-to-b from-amber-600/30 via-stone-300/80 to-transparent sm:-left-6 sm:block"
             aria-hidden
           />
 
-          <header className="border-b border-stone-200 pb-6">
-            <p className="mb-1 text-xs font-medium uppercase tracking-[0.2em] text-amber-950">
-              Résumé
-            </p>
-            <h1
-              className="font-serif text-3xl font-medium tracking-tight text-stone-900 sm:text-4xl"
-              style={{
-                fontFamily: "var(--font-display), ui-serif, Georgia, serif",
-              }}
-            >
-              {resume.name}
-            </h1>
-            <p className="mt-1.5 text-base text-stone-800">{resume.title}</p>
-            <p className="mt-2 max-w-xl text-balance text-sm leading-snug text-stone-800 sm:text-[0.95rem] sm:leading-relaxed">
-              {resume.focusLine}
-            </p>
-
-            <p className="mt-4 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-sm [word-spacing:0.05em]">
-              <a
-                className="text-stone-900 underline decoration-stone-500 underline-offset-2 transition hover:decoration-amber-700"
-                href={`tel:${resume.phone.replace(/\s/g, "")}`}
+          <div className="divide-y divide-stone-200 [&>*]:py-5 [&>:first-child]:pt-0 [&>:last-child]:pb-0">
+            <header>
+              <p className="mb-1 text-xs font-medium uppercase tracking-[0.2em] text-amber-950">
+                Résumé
+              </p>
+              <h1
+                className="font-serif text-3xl font-medium tracking-tight text-stone-900 sm:text-4xl"
+                style={{
+                  fontFamily: "var(--font-display), ui-serif, Georgia, serif",
+                }}
               >
-                {resume.phone}
-              </a>
-              <span className="text-stone-300" aria-hidden>
-                ·
-              </span>
-              <a
-                className="text-stone-900 underline decoration-stone-500 underline-offset-2 transition hover:decoration-amber-700"
-                href={`mailto:${resume.email}`}
-              >
-                {resume.email}
-              </a>
-              {resume.links.map((l) => (
-                <span key={l.href} className="inline-flex items-center gap-x-2">
-                  <span className="text-stone-300" aria-hidden>
-                    ·
-                  </span>
-                  <a
-                    className="text-stone-900 underline decoration-stone-500 underline-offset-2 transition hover:decoration-amber-700"
-                    href={l.href}
-                    rel="me noopener noreferrer"
-                    target="_blank"
-                  >
-                    {l.label}
-                  </a>
-                </span>
-              ))}
-            </p>
-          </header>
+                {resume.name}
+              </h1>
+              <p className="mt-1.5 text-base text-stone-800">{resume.title}</p>
+              <p className="mt-2 max-w-xl text-balance text-sm leading-snug text-stone-800 sm:text-[0.95rem] sm:leading-relaxed">
+                {resume.focusLine}
+              </p>
 
-          <section aria-labelledby="skills">
-            <h2
-              id="skills"
-              className={sectionTitleClass}
-              style={{
-                fontFamily: "var(--font-display), ui-serif, Georgia, serif",
-              }}
-            >
-              Skills
-            </h2>
-            <p className="m-0 text-sm leading-snug text-stone-800">
-              {resume.skills.join(", ")}
-            </p>
-          </section>
-
-          <section aria-labelledby="work">
-            <h2
-              id="work"
-              className={sectionTitleClass}
-              style={{
-                fontFamily: "var(--font-display), ui-serif, Georgia, serif",
-              }}
-            >
-              Experience
-            </h2>
-            <ol className="list-none space-y-8 p-0 sm:space-y-9">
-              {resume.jobs.map((job) => (
-                <li key={job.company}>
-                  <h3
-                    className="font-serif text-lg font-medium text-stone-900 sm:text-xl"
-                    style={{
-                      fontFamily:
-                        "var(--font-display), ui-serif, Georgia, serif",
-                    }}
-                  >
-                    {job.company}
-                  </h3>
-                  <ul className="mt-1.5 list-none space-y-1.5 p-0">
-                    {job.roles.map((r) => (
-                      <li
-                        key={r.title + r.period}
-                        className="flex flex-col gap-0.5 sm:flex-row sm:justify-between"
-                        data-employment
-                        data-org={job.company}
-                        data-title={r.title}
-                        data-start={r.startDate}
-                        data-end={r.endDate ?? ""}
-                      >
-                        <span className="text-stone-800">{r.title}</span>
-                        <span className="shrink-0 text-sm text-stone-700 tabular-nums sm:text-right">
-                          {r.period}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                  <BulletList items={job.bullets} />
-                </li>
-              ))}
-            </ol>
-          </section>
-
-          <section aria-labelledby="projects">
-            <h2
-              id="projects"
-              className={sectionTitleClass}
-              style={{
-                fontFamily: "var(--font-display), ui-serif, Georgia, serif",
-              }}
-            >
-              Side projects
-            </h2>
-            <ul className="list-none space-y-3 p-0">
-              {resume.sideProjects.map((p) => (
-                <li
-                  key={p.title}
-                  className="border-l-2 border-amber-600/25 pl-4"
+              <p className="mt-4 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-sm [word-spacing:0.05em]">
+                <a
+                  className="text-stone-900 underline decoration-stone-500 underline-offset-2 transition hover:decoration-amber-700"
+                  href={`tel:${resume.phone.replace(/\s/g, "")}`}
                 >
-                  <h3 className="text-[0.95rem] font-medium text-stone-900">
-                    {p.title}
-                  </h3>
-                  <p className="mt-0.5 text-sm leading-snug text-stone-800 sm:leading-relaxed">
-                    {p.summary}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </section>
+                  {resume.phone}
+                </a>
+                <span className="text-stone-300" aria-hidden>
+                  ·
+                </span>
+                <a
+                  className="text-stone-900 underline decoration-stone-500 underline-offset-2 transition hover:decoration-amber-700"
+                  href={`mailto:${resume.email}`}
+                >
+                  {resume.email}
+                </a>
+                {resume.links.map((l) => (
+                  <span
+                    key={l.href}
+                    className="inline-flex items-center gap-x-2"
+                  >
+                    <span className="text-stone-300" aria-hidden>
+                      ·
+                    </span>
+                    <a
+                      className="text-stone-900 underline decoration-stone-500 underline-offset-2 transition hover:decoration-amber-700"
+                      href={l.href}
+                      rel="me noopener noreferrer"
+                      target="_blank"
+                    >
+                      {l.label}
+                    </a>
+                  </span>
+                ))}
+              </p>
+            </header>
 
-          <section aria-labelledby="edu">
-            <h2
-              id="edu"
-              className={sectionTitleClass}
-              style={{
-                fontFamily: "var(--font-display), ui-serif, Georgia, serif",
-              }}
-            >
-              Education
-            </h2>
-            <p className="m-0 text-sm leading-relaxed text-stone-800 sm:leading-relaxed">
-              <span className="font-medium text-stone-900">
-                {resume.education.school}
-              </span>
-              <span className="text-stone-600">, </span>
-              {resume.education.degree}
-            </p>
-          </section>
+            <section aria-labelledby="skills">
+              <h2
+                id="skills"
+                className={sectionTitleClass}
+                style={{
+                  fontFamily: "var(--font-display), ui-serif, Georgia, serif",
+                }}
+              >
+                Skills
+              </h2>
+              <p className="m-0 text-sm leading-snug text-stone-800">
+                {resume.skills.join(", ")}
+              </p>
+            </section>
+
+            <section aria-labelledby="work">
+              <h2
+                id="work"
+                className={sectionTitleClass}
+                style={{
+                  fontFamily: "var(--font-display), ui-serif, Georgia, serif",
+                }}
+              >
+                Experience
+              </h2>
+              <ol className="list-none space-y-8 p-0 sm:space-y-9">
+                {resume.jobs.map((job) => (
+                  <li key={job.company}>
+                    <h3
+                      className="font-serif text-lg font-medium text-stone-900 sm:text-xl"
+                      style={{
+                        fontFamily:
+                          "var(--font-display), ui-serif, Georgia, serif",
+                      }}
+                    >
+                      {job.company}
+                    </h3>
+                    <ul className="mt-1.5 list-none space-y-1.5 p-0">
+                      {job.roles.map((r) => (
+                        <li
+                          key={r.title + r.period}
+                          className="flex flex-col gap-0.5 sm:flex-row sm:justify-between"
+                          data-employment
+                          data-org={job.company}
+                          data-title={r.title}
+                          data-start={r.startDate}
+                          data-end={r.endDate ?? ""}
+                        >
+                          <span className="text-stone-800">{r.title}</span>
+                          <span className="shrink-0 text-sm text-stone-700 tabular-nums sm:text-right">
+                            {r.period}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                    <BulletList items={job.bullets} />
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            <section aria-labelledby="projects">
+              <h2
+                id="projects"
+                className={sectionTitleClass}
+                style={{
+                  fontFamily: "var(--font-display), ui-serif, Georgia, serif",
+                }}
+              >
+                Side projects
+              </h2>
+              <ul className="list-none space-y-3 p-0">
+                {resume.sideProjects.map((p) => (
+                  <li
+                    key={p.title}
+                    className="border-l-2 border-amber-600/25 pl-4"
+                  >
+                    <h3 className="text-[0.95rem] font-medium text-stone-900">
+                      {p.title}
+                    </h3>
+                    <p className="mt-0.5 text-sm leading-snug text-stone-800 sm:leading-relaxed">
+                      {p.summary}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <section aria-labelledby="edu">
+              <h2
+                id="edu"
+                className={sectionTitleClass}
+                style={{
+                  fontFamily: "var(--font-display), ui-serif, Georgia, serif",
+                }}
+              >
+                Education
+              </h2>
+              <p className="m-0 text-sm leading-relaxed text-stone-800 sm:leading-relaxed">
+                <span className="font-medium text-stone-900">
+                  {resume.education.school}
+                </span>
+                <span className="text-stone-600">, </span>
+                {resume.education.degree}
+              </p>
+            </section>
+          </div>
         </main>
       </div>
     </div>

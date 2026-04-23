@@ -18,7 +18,7 @@ export default function ProjectsPage() {
 
   const selectedProject = name
     ? PROJECTS.find(
-        (project) => getProjectSearchName(project.title) === name
+        (project) => getProjectSearchName(project.title) === name,
       ) || null
     : null;
 
@@ -32,14 +32,14 @@ export default function ProjectsPage() {
 
   useEffect(() => {
     setColumnCount(
-      window.innerWidth >= 992 ? 3 : window.innerWidth >= 768 ? 2 : 1
+      window.innerWidth >= 992 ? 3 : window.innerWidth >= 768 ? 2 : 1,
     );
   }, []);
 
   useEffect(() => {
     const handleResize = () => {
       setColumnCount(
-        window.innerWidth >= 992 ? 3 : window.innerWidth >= 768 ? 2 : 1
+        window.innerWidth >= 992 ? 3 : window.innerWidth >= 768 ? 2 : 1,
       );
     };
     window.addEventListener("resize", handleResize);
@@ -85,7 +85,11 @@ export default function ProjectsPage() {
   return (
     <div className="min-h-dvh p-4 bg-black">
       <div className="mx-auto text-white">
-        <Link href="/" className="text-white text-lg" role="button">
+        <Link
+          href="/"
+          className="text-white text-lg print:hidden"
+          role="button"
+        >
           {"<-"} go back
         </Link>
         <div className="flex mt-4 gap-4">
