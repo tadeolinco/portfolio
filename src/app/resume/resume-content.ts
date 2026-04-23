@@ -28,32 +28,38 @@ export type SideProject = {
 export const resume = {
   name: "Sam Bautista",
   title: "Frontend Engineer",
-  focusLine: "Prefer startups and high-growth teams — ownership, pace, product-minded work.",
+  focusLine:
+    "Startups, high-growth teams: ownership, pace, product-minded work.",
   phone: "+6593707275",
   email: "tadeolinco@gmail.com",
   links: [
     { label: "tadeolinco.dev", href: "https://tadeolinco.dev" },
     { label: "LinkedIn", href: "https://linkedin.com/in/tadeolinco" },
   ],
-  skills: {
-    frontend:
-      "ReactJS, React Hooks, NextJS, Socket.io, CSS, TailwindCSS, Recoil, Redux, Jest, Cypress",
-    backend:
-      "NodeJS, NestJS, ExpressJS, TypeORM, Prisma 2, Supabase",
-  },
+  skills: [
+    "ReactJS",
+    "TanStack",
+    "NextJS",
+    "TailwindCSS",
+    "MUI",
+    "Playwright",
+    "Supabase",
+    "Typescript",
+    "GitHub",
+  ],
   jobs: [
     {
       company: "Unravel Carbon",
       roles: [
         {
           title: "Senior Frontend Engineer",
-          period: "April 2024 – present",
+          period: "April 2024 to present",
           startDate: "2024-04-01",
           endDate: null,
         },
         {
           title: "Frontend Engineer",
-          period: "November 2022 – April 2024",
+          period: "November 2022 to April 2024",
           startDate: "2022-11-01",
           endDate: "2024-04-01",
         },
@@ -63,17 +69,17 @@ export const resume = {
           intro:
             "Shipped three flagship features on a React + Vite + GraphQL carbon accounting platform.",
           subItems: [
-            "Data driller + audit trail — filterable / exportable data exploration and full activity log for data-heavy customers.",
-            "Agents + AI — streaming chat, tool-use artifacts, and gating across agents dashboard, data review v2 + Unravel AI, and phase 1.2.",
-            "Custom charts and dashboards — AI-assisted charts, drag-and-drop layout, and access controls.",
+            "Data driller + audit trail: filterable / exportable data exploration and full activity log for data-heavy customers.",
+            "Agents + AI: streaming chat, tool-use artifacts, and gating across agents dashboard, data review v2 + Unravel AI, and phase 1.2.",
+            "Custom charts and dashboards: AI-assisted charts, drag-and-drop layout, and access controls.",
           ],
         },
         {
           intro: "Drove self-initiated platform work.",
           subItems: [
-            "Version check — Vercel API + client prompt for stale cache; version bumps via Husky.",
-            "Bug reports — in-app form with session recording, auto-filled context, webhook to backend.",
-            "TypeScript — strict checks repo-wide; merged duplicate components into shared packages (~10.5k lines removed).",
+            "Version check: Vercel API + client prompt for stale cache; version bumps via Husky.",
+            "Bug reports: in-app form with session recording, auto-filled context, webhook to backend.",
+            "TypeScript: strict checks repo-wide; merged duplicate components into shared packages (~10.5k lines removed).",
           ],
         },
       ],
@@ -83,7 +89,7 @@ export const resume = {
       roles: [
         {
           title: "Senior Frontend Engineer",
-          period: "August 2022 – October 2022",
+          period: "August 2022 to October 2022",
           startDate: "2022-08-01",
           endDate: "2022-10-01",
         },
@@ -98,7 +104,7 @@ export const resume = {
       roles: [
         {
           title: "Full-stack Engineer",
-          period: "September 2021 – August 2022",
+          period: "September 2021 to August 2022",
           startDate: "2021-09-01",
           endDate: "2022-08-01",
         },
@@ -113,7 +119,7 @@ export const resume = {
       roles: [
         {
           title: "Product Engineer",
-          period: "December 2020 – September 2021",
+          period: "December 2020 to September 2021",
           startDate: "2020-12-01",
           endDate: "2021-09-01",
         },
@@ -128,7 +134,7 @@ export const resume = {
       roles: [
         {
           title: "Lead UI Engineer",
-          period: "July 2019 – December 2020",
+          period: "July 2019 to December 2020",
           startDate: "2019-07-01",
           endDate: "2020-12-01",
         },
@@ -143,7 +149,7 @@ export const resume = {
       roles: [
         {
           title: "Frontend Software Developer",
-          period: "July 2018 – July 2019",
+          period: "July 2018 to July 2019",
           startDate: "2018-07-01",
           endDate: "2019-07-01",
         },
