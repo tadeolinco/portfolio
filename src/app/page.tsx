@@ -473,7 +473,10 @@ export default function Home() {
             </a>
           </div>
 
-          <div>
+          <div className="flex gap-4">
+            <Link href="/resume" className="hover:underline" role="button">
+              Resume
+            </Link>
             <Link href="/projects" className="hover:underline" role="button">
               Projects
             </Link>
