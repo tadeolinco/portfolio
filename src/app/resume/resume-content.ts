@@ -162,6 +162,11 @@ export const resume = {
   ] satisfies JobEntry[],
   sideProjects: [
     {
+      title: "Can Book?",
+      summary:
+        "Consolidated Singapore cinema showtimes across exhibitors; TanStack Start, Supabase, server Playwright scrapes, Vercel Blob. canbook.sh.",
+    },
+    {
       title: "Expenses Tracker",
       summary:
         "Mobile-first expense logging and category trends; in daily use 2+ years. Next.js, Tailwind, Prisma, Supabase.",

@@ -122,8 +122,10 @@ export default function ProjectsPage() {
 
               {selectedProject?.video && (
                 <video
-                  // @ts-expect-error cannot type
-                  src={cdn[selectedProject.video]}
+                  src={
+                    (cdn as Record<string, string>)[selectedProject.video] ??
+                    `/${selectedProject.video}`
+                  }
                   playsInline
                   autoPlay
                   loop

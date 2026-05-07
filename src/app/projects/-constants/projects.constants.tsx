@@ -27,6 +27,60 @@ export type ProjectType = {
 
 export const PROJECTS: ProjectType[] = [
   {
+    title: "Can Book? | Singapore Cinema Showtimes",
+    startDate: new Date("2026-06-01"),
+    endDate: null,
+    description:
+      "Singapore cinema showtimes across exhibitors, with server scrapes and booking deep links",
+    technologies: [
+      "React",
+      "TypeScript",
+      "TanStack Start",
+      "TanStack Router",
+      "TanStack Query",
+      "Vite",
+      "Tailwind CSS",
+      "Supabase",
+      "Playwright",
+    ],
+    height: 1026,
+    width: 1920,
+    video: "videos/can-book.mp4",
+    content: (
+      <div className="space-y-4 pb-4">
+        <p>
+          I wanted one place to see what is playing in Singapore cinemas and
+          jump straight to booking. Each exhibitor site is different, so I built
+          a pipeline that scrapes Golden Village, Shaw, Filmhouse, EagleWings,
+          and Capitol-style sources, normalizes rows into a single
+          &quot;screening&quot; shape (title, venue, time, subtitles, format
+          tags), then publishes a merged snapshot.
+        </p>
+        <p>
+          The app is{" "}
+          <a
+            href="https://canbook.sh"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            canbook.sh
+          </a>
+          . Backend uses Supabase for the latest consolidated rows, Vercel Blob
+          for scrape artifacts, and Playwright on the server (Chromium build for
+          serverless) when a site needs a real browser. Frontend is TanStack
+          Start with Router and Query on React 19.
+        </p>
+        <p>
+          Interesting constraints: Singapore time for dates, dropping elapsed
+          showtimes in the API so the UI stays forward-looking, and keeping
+          exhibitor-specific quirks out of the product language so filters and
+          copy stay consistent.
+        </p>
+      </div>
+    ),
+  },
+  {
     title: "Portfolio Website",
     startDate: new Date("2024-01-15"),
     endDate: null,
