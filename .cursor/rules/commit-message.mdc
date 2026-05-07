@@ -1,0 +1,13 @@
+---
+description: Commit messages must be a single line (subject only, no body)
+alwaysApply: true
+---
+
+# Commit messages: one line only
+
+When suggesting or writing a commit message (including Conventional Commits):
+
+- Use **one line** — the subject line only.
+- Do **not** add a blank line and body; no bullet lists or multi-paragraph explanations in the commit message.
+
+If more context belongs elsewhere (PR description, `CHANGELOG`, ticket), put it there — not in the commit message.

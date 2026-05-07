@@ -1,0 +1,27 @@
+---
+description: User-facing copy, punctuation, and prose style for this repo
+alwaysApply: true
+---
+
+# Copywriting
+
+Rules for **user-facing strings** (UI labels, buttons, empty states, toasts, dialogs, helper text, in-app marketing, `aria-label`, and similar) and for **prose you write for this project** (docs visible in-repo, comments, commit messages, chat about the work).
+
+## Punctuation on short UI strings
+
+When the string targets app users:
+
+- **Single sentence only:** omit the trailing period.
+- **Multiple sentences:** use normal sentence punctuation where grammar requires.
+
+**Out of scope for this bullet:** commit subjects, code comments (unless documenting exact UI wording), chat replies to the developer only, README/AGENTS technical prose unless it is branded product copy.
+
+**Rationale:** Short single-sentence UI copy reads better without a terminal full stop.
+
+## No em dash
+
+Do **not** use Unicode U+2014 (`—`) in user-facing strings, docs, comments, commit messages, or chat about this work.
+
+**Prefer:** a sentence break (period plus new sentence), comma, colon, parentheses, or a hyphen for compounds (example: `Singapore cinema data: glossary` instead of joining two clauses with `—`).
+
+**Exception:** do not change third-party quoted text, URLs, or data that legitimately contains `—`.

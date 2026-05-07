@@ -1,0 +1,24 @@
+---
+description: Prefer descriptive variable names over terse indices and abbreviations
+alwaysApply: true
+applyTo: "**/*.{ts,tsx,js,jsx,mjs,cjs}"
+---
+
+# Variable naming: prefer verbose names
+
+When introducing or renaming bindings in TypeScript/JavaScript:
+
+## Prefer
+
+- Full words or clear phrases: `index`, `itemIndex`, `rowIndex`, `columnIndex`, `sortOrder`, `point`, `cursorPosition`, `screening`, `element`, `event`, `error`.
+- Names that state role or domain (aligned with [GLOSSARY.md](../../GLOSSARY.md) terms where relevant).
+
+## Avoid
+
+- Single-letter or ultra-short loop indices: `i`, `j`, `k`, `n` (use `index`, `innerIndex`, `outerIndex`, or domain-specific names like `dayIndex`).
+- Abbreviations that sacrifice meaning: `pt` (point), `tmp`, `obj`, `arr`, `str`.
+- Cryptic one-letter handlers where a word fits: prefer `event` over `e`, `error` over `err`, when it stays readable.
+
+## Existing code
+
+Do not mass-rename for style alone in untouched areas; apply this rule to **new code** and to **lines you are already editing**, unless the user asks for a broader rename pass.

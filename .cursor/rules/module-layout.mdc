@@ -1,0 +1,36 @@
+---
+description: Group related constants and utilities; one React component per file; prefer exports
+globs: src/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Module layout
+
+Conventions for splitting code and exports when working under `src/`.
+
+## Constants
+
+- Put shared literals, magic numbers, URL prefixes, UI dimensions, column keys, and similar in **constants modules** for that area (e.g. `foo.constants.ts` next to `foo.tsx`, or a feature-local `constants.ts`).
+- **Collate related constants** in the same file: one module per feature or topic, not one export per file.
+- Do **not** bury large constant blocks at the top of route, component, or server files unless the constant is genuinely internal to a single function and deleting the file deletes the constant (still prefer a constants file when in doubt).
+
+## Utilities
+
+- Put **standalone functions** (pure helpers, parsers, formatters, small algorithms) in **utility modules**, not inline in routes or components when they are reusable or test-worthy.
+- **Collate related utilities** in the same file by capability or domain (e.g. booking flow helpers together, poster-rect helpers together). Prefer cohesion over splitting every function into its own file.
+- Name files after the capability or domain (e.g. `bookingFlowEstablishment.ts`); avoid a single undifferentiated `helpers.ts` unless the folder already uses that pattern.
+
+## Exports
+
+- In constants and utility modules, **export** the bindings you define (`export const`, `export function`). Default stance is a small public surface for that file, not file-private helpers, so imports stay explicit and tree-shaking stays clear.
+- For React components, export the component from its module (`export function` / `export default` per existing file style). Do not add extra components in the same file.
+
+## React components
+
+- **One component per file.** If a piece of UI is only used by a parent, it still gets its own file (e.g. `ParentSection.tsx` imported from `Parent.tsx`).
+- Exception: the file that defines the **route** or **root layout** may remain the TanStack route module; still split child UI into separate component files and import them.
+
+## Out of scope
+
+- Generated or third-party files (e.g. `routeTree.gen.ts`).
+- Legitimate inline callbacks and small handlers inside a component are fine; extract when they become non-trivial or reusable tests targets.
