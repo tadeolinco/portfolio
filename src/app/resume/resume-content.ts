@@ -65,23 +65,10 @@ export const resume = {
         },
       ],
       bullets: [
-        {
-          intro:
-            "Shipped flagship product work on a React + Vite + GraphQL carbon accounting platform, including:",
-          subItems: [
-            "Data driller + audit trail: filterable / exportable data exploration and full activity log for data-heavy customers.",
-            "Agents + AI: streaming chat, tool-use artifacts, and gating across the agents dashboard, data review, and company AI experiences.",
-            "Custom charts and dashboards: AI-assisted charts, drag-and-drop layout, and access controls.",
-          ],
-        },
-        {
-          intro: "Drove self-initiated platform work.",
-          subItems: [
-            "Deploy freshness: Vercel API + client prompt when bundles are stale; release automation with Husky.",
-            "Bug reports: in-app form with session recording, auto-filled context, webhook to backend.",
-            "TypeScript: strict checks repo-wide; merged duplicate components into shared packages (~10.5k lines removed).",
-          ],
-        },
+        "Shipped frontend for Sustainability Copilot and AI agents (peer benchmarking, gap analysis, data collection), including chat UX, tool artifacts, and streaming workflows used by enterprise sustainability teams.",
+        "Built a custom chart builder in 3 weeks as an alternative to a paid vendor integration estimated at $10K+, owning POC through production and iterating on 70+ post-launch feedback items.",
+        "Primary frontend owner for production support: triaged 100+ customer-facing bugs, built in-app bug reporting (platform → Slack → Notion), and resolved 54 Notion tickets with ~24-minute median first response on urgent issues.",
+        "Led frontend for enterprise data upload workflows (v1 and v2), including supplier collection, task mapping, OCR intake, and GHG category modules for fuel, waste, and refrigerants.",
       ],
     },
     {
@@ -162,9 +149,9 @@ export const resume = {
   ] satisfies JobEntry[],
   sideProjects: [
     {
-      title: "Can Book?",
+      title: "Can Book",
       summary:
-        "Consolidated Singapore cinema showtimes across exhibitors; TanStack Start, Supabase, server Playwright scrapes, Vercel Blob. canbook.sh.",
+        "Letterboxd-inspired showtimes board for Singapore and Philippines cinemas. Server Playwright scrapes across 8+ chains, normalizes rows into one poster grid with booking deep links, favourite venues, watchlist alerts, and a weekly digest email. TanStack Start, Supabase, Vercel Blob. canbook.sh.",
     },
     {
       title: "Expenses Tracker",

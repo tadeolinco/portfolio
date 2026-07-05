@@ -2,6 +2,17 @@
 
 Context for AI coding agents working in this repository.
 
+## Start here
+
+| Topic | Read |
+| --- | --- |
+| **Resume ubiquitous language (terms, career narrative vocabulary)** | [CONTEXT.md](./CONTEXT.md) |
+| **Resume strategy, timeline, editing workflow** | [notes/resume-guidance.md](./notes/resume-guidance.md) |
+| **Unravel Carbon work history (PRs, bullets, support metrics)** | [notes/unravel-work/overview.md](./notes/unravel-work/overview.md) and sibling files in that folder |
+| **Code layout and conventions** | This file (below) + `.cursor/rules/` |
+
+When editing `/resume` or employment copy, read **CONTEXT.md** for canonical terms, then **notes/resume-guidance.md** for strategy and file paths. Do not invent metrics or tenure facts outside those docs or `notes/unravel-work/`.
+
 ## Stack
 
 - **App**: [Next.js](https://nextjs.org) (App Router) + React 19; dev server uses Turbopack (`next dev --turbopack`)
@@ -15,10 +26,14 @@ Context for AI coding agents working in this repository.
 | Area | Path |
 | --- | --- |
 | App routes & layouts | `src/app/` |
+| Resume (data + page) | `src/app/resume/resume-content.ts`, `src/app/resume/page.tsx` |
 | Shared UI | `src/components/` |
 | Generated/static film data & CDN map | `src/*.json`, `src/staticImports.ts` (tool-generated when running sync scripts) |
 | Shared client helpers | `src/utils/` |
 | One-off data / asset pipelines | `scripts/` |
+| Resume ubiquitous language | `CONTEXT.md` |
+| Resume strategy and editing | `notes/resume-guidance.md` |
+| Unravel work notes (source for resume bullets) | `notes/unravel-work/` |
 
 ## Cursor rules (read these)
 
@@ -54,3 +69,4 @@ Individual script steps: `export-data`, `convert-json`, `get-posters`, `generate
 - Match existing patterns in the file you touch; avoid unrelated refactors.
 - Follow `module-layout.mdc` when adding components, constants, or utilities under `src/`.
 - Environment-specific behavior may depend on `.env`; do not commit secrets.
+- Resume and career edits: use terms from [CONTEXT.md](./CONTEXT.md); follow [notes/resume-guidance.md](./notes/resume-guidance.md) for strategy and sources.
