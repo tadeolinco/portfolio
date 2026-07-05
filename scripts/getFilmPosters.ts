@@ -6,6 +6,21 @@ const filmsPath = "./src/baseFilms.json";
 
 type FilmRecord = Record<string, string>;
 
+function downloadPoster(imageUrl: string, destinationPath: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const file = fs.createWriteStream(destinationPath);
+    https
+      .get(imageUrl, (response) => {
+        response.pipe(file);
+        file.on("finish", () => {
+          file.close();
+          resolve();
+        });
+      })
+      .on("error", reject);
+  });
+}
+
 (async () => {
   const films = JSON.parse(
     fs.readFileSync(filmsPath, "utf8")
@@ -58,22 +73,18 @@ type FilmRecord = Record<string, string>;
 
     film["Backdrop"] = backdropUrl;
 
-    const imageUrl = await page.$$eval(
-      "[data-film-id][data-item-slug]",
-      (elements) => {
-        const trailingYear = /-(?:1[89]\d{2}|20\d{2})$/;
-        for (const el of elements) {
-          const filmId = el.getAttribute("data-film-id");
-          const slug = el.getAttribute("data-item-slug");
-          if (!filmId || !slug) continue;
-
-          const slugForUrl = slug.replace(trailingYear, "");
-          const digitPath = filmId.split("").join("/");
-
-          return `https://a.ltrbxd.com/resized/film-poster/${digitPath}/${filmId}-${slugForUrl}-0-230-0-345-crop.jpg`;
+    const imageUrl = await page
+      .$$eval(".poster.film-poster img", (images) => {
+        for (const image of images) {
+          const src = image.getAttribute("src") ?? "";
+          if (!src || src.includes("empty-poster")) continue;
+          if (src.includes("film-poster") || src.includes("ltrbxd.com/resized/")) {
+            return src;
+          }
         }
-      }
-    );
+        return "";
+      })
+      .catch(() => "");
 
     if (!posterExists) {
       if (imageUrl) {
@@ -81,12 +92,10 @@ type FilmRecord = Record<string, string>;
         fs.mkdirSync(`./public/posters/${split[split.length - 1]}`, {
           recursive: true,
         });
-        const file = fs.createWriteStream(path);
-        https.get(imageUrl, function (response) {
-          response.pipe(file);
-        });
+        await downloadPoster(imageUrl, path);
       } else {
         console.log("No poster found for ", film["Name"]);
+        noPosters.push(film["Name"]);
       }
     }
 

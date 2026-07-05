@@ -6,8 +6,10 @@ import poster1EmM from "../public/posters/1EmM/poster.jpg";
 import poster1Iik from "../public/posters/1Iik/poster.jpg";
 import poster1JzG from "../public/posters/1JzG/poster.jpg";
 import poster1MDQ from "../public/posters/1MDQ/poster.jpg";
+import poster1MLK from "../public/posters/1MLK/poster.jpg";
 import poster1NoM from "../public/posters/1NoM/poster.jpg";
 import poster1OEc from "../public/posters/1OEc/poster.jpg";
+import poster1PY8 from "../public/posters/1PY8/poster.jpg";
 import poster1QE4 from "../public/posters/1QE4/poster.jpg";
 import poster1T86 from "../public/posters/1T86/poster.jpg";
 import poster1TAY from "../public/posters/1TAY/poster.jpg";
@@ -65,6 +67,7 @@ import poster2cCk from "../public/posters/2cCk/poster.jpg";
 import poster2wRE from "../public/posters/2wRE/poster.jpg";
 import poster3C1m from "../public/posters/3C1m/poster.jpg";
 import poster3GB4 from "../public/posters/3GB4/poster.jpg";
+import poster3SWy from "../public/posters/3SWy/poster.jpg";
 import poster4E5i from "../public/posters/4E5i/poster.jpg";
 import poster4VZ8 from "../public/posters/4VZ8/poster.jpg";
 import poster4pD0 from "../public/posters/4pD0/poster.jpg";
@@ -77,11 +80,13 @@ import poster7bQA from "../public/posters/7bQA/poster.jpg";
 import poster8i7u from "../public/posters/8i7u/poster.jpg";
 import poster948A from "../public/posters/948A/poster.jpg";
 import posterATh8 from "../public/posters/ATh8/poster.jpg";
+import posterB1BK from "../public/posters/B1BK/poster.jpg";
 import posterBfbQ from "../public/posters/BfbQ/poster.jpg";
 import posterCFr8 from "../public/posters/CFr8/poster.jpg";
 import posterCjNG from "../public/posters/CjNG/poster.jpg";
 import posterDUHM from "../public/posters/DUHM/poster.jpg";
 import posterE9IU from "../public/posters/E9IU/poster.jpg";
+import posterEY6W from "../public/posters/EY6W/poster.jpg";
 import posterEgcw from "../public/posters/Egcw/poster.jpg";
 import posterF0vO from "../public/posters/F0vO/poster.jpg";
 import posterF1Nk from "../public/posters/F1Nk/poster.jpg";
@@ -94,9 +99,13 @@ import posterKQMM from "../public/posters/KQMM/poster.jpg";
 import posterKRbM from "../public/posters/KRbM/poster.jpg";
 import posterKgyu from "../public/posters/Kgyu/poster.jpg";
 import posterLjA6 from "../public/posters/LjA6/poster.jpg";
+import posterMQuM from "../public/posters/MQuM/poster.jpg";
 import posterMsm from "../public/posters/Msm/poster.jpg";
+import posterNDSe from "../public/posters/NDSe/poster.jpg";
 import posterOA2w from "../public/posters/OA2w/poster.jpg";
+import posterPNqo from "../public/posters/PNqo/poster.jpg";
 import posterTFGw from "../public/posters/TFGw/poster.jpg";
+import posterUXdO from "../public/posters/UXdO/poster.jpg";
 import postera5fa from "../public/posters/a5fa/poster.jpg";
 import posteraPvy from "../public/posters/aPvy/poster.jpg";
 import posteraaie from "../public/posters/aaie/poster.jpg";
@@ -135,6 +144,7 @@ import posterq1Dk from "../public/posters/q1Dk/poster.jpg";
 import postertABk from "../public/posters/tABk/poster.jpg";
 import postertNWU from "../public/posters/tNWU/poster.jpg";
 import posterwoVy from "../public/posters/woVy/poster.jpg";
+import posterzRNY from "../public/posters/zRNY/poster.jpg";
 
 export const cdn = {
     posters: {
@@ -147,8 +157,10 @@ poster1EmM,
 poster1Iik,
 poster1JzG,
 poster1MDQ,
+poster1MLK,
 poster1NoM,
 poster1OEc,
+poster1PY8,
 poster1QE4,
 poster1T86,
 poster1TAY,
@@ -206,6 +218,7 @@ poster2cCk,
 poster2wRE,
 poster3C1m,
 poster3GB4,
+poster3SWy,
 poster4E5i,
 poster4VZ8,
 poster4pD0,
@@ -218,11 +231,13 @@ poster7bQA,
 poster8i7u,
 poster948A,
 posterATh8,
+posterB1BK,
 posterBfbQ,
 posterCFr8,
 posterCjNG,
 posterDUHM,
 posterE9IU,
+posterEY6W,
 posterEgcw,
 posterF0vO,
 posterF1Nk,
@@ -235,9 +250,13 @@ posterKQMM,
 posterKRbM,
 posterKgyu,
 posterLjA6,
+posterMQuM,
 posterMsm,
+posterNDSe,
 posterOA2w,
+posterPNqo,
 posterTFGw,
+posterUXdO,
 postera5fa,
 posteraPvy,
 posteraaie,
@@ -276,4 +295,5 @@ posterq1Dk,
 postertABk,
 postertNWU,
 posterwoVy,
+posterzRNY,
 }};
