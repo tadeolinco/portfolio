@@ -1,6 +1,6 @@
 # Resume guidance for agents
 
-Operational guide for editing `/resume` and job-facing copy. **Ubiquitous language** (term definitions, career narrative vocabulary) lives in [CONTEXT.md](../CONTEXT.md). **Unravel metrics and bullet candidates** live in [unravel-work/](./unravel-work/).
+Operational guide for editing `/resume` and job-facing copy. **Ubiquitous language** (term definitions, career narrative vocabulary) lives in [CONTEXT.md](../CONTEXT.md). **Unravel metrics and bullet candidates** live in [unravel-work/](./unravel-work/). **Sam's PR/Slack prose voice** (when ghostwriting updates for Sam) lives in [writing-style.md](./writing-style.md).
 
 ## Source files
 

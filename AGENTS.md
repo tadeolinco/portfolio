@@ -8,6 +8,7 @@ Context for AI coding agents working in this repository.
 | --- | --- |
 | **Resume ubiquitous language (terms, career narrative vocabulary)** | [CONTEXT.md](./CONTEXT.md) |
 | **Resume strategy, timeline, editing workflow** | [notes/resume-guidance.md](./notes/resume-guidance.md) |
+| **Sam's prose voice (PRs, Slack, drafts for Sam)** | [notes/writing-style.md](./notes/writing-style.md) |
 | **Unravel Carbon work history (PRs, bullets, support metrics)** | [notes/unravel-work/overview.md](./notes/unravel-work/overview.md) and sibling files in that folder |
 | **Code layout and conventions** | This file (below) + `.cursor/rules/` |
 
@@ -33,6 +34,7 @@ When editing `/resume` or employment copy, read **CONTEXT.md** for canonical ter
 | One-off data / asset pipelines | `scripts/` |
 | Resume ubiquitous language | `CONTEXT.md` |
 | Resume strategy and editing | `notes/resume-guidance.md` |
+| Sam's writing voice (PR/Slack prose) | `notes/writing-style.md` |
 | Unravel work notes (source for resume bullets) | `notes/unravel-work/` |
 
 ## Cursor rules (read these)
