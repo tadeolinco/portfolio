@@ -26,7 +26,12 @@ export type SideProject = {
   href?: string;
 };
 
-export type ResumeVariantId = "default" | "climate" | "ai" | "platform";
+export type ResumeVariantId =
+  | "default"
+  | "climate"
+  | "ai"
+  | "platform"
+  | "floEnergy";
 
 type UnravelBulletKey =
   | "copilot"
@@ -34,7 +39,8 @@ type UnravelBulletKey =
   | "productionSupport"
   | "emissionsDashboards"
   | "dataUpload"
-  | "platformQuality";
+  | "platformQuality"
+  | "customerWorkflows";
 
 type ResumeVariant = {
   focusLine: string;
@@ -46,7 +52,7 @@ type ResumeVariant = {
  * Active variant for the public resume page.
  * Change when tailoring for a specific job post (see notes/resume-guidance.md).
  */
-export const activeResumeVariantId = "default" satisfies ResumeVariantId;
+export const activeResumeVariantId = "floEnergy" satisfies ResumeVariantId;
 
 const unravelBulletPool = {
   copilot:
@@ -60,7 +66,9 @@ const unravelBulletPool = {
   dataUpload:
     "Led frontend for enterprise data upload workflows (v1 and v2), including supplier collection, task mapping, OCR intake, and GHG category modules for fuel, waste, and refrigerants.",
   platformQuality:
-    "Drove platform quality: Playwright E2E across environments, i18n (including Japanese), Sentry and PostHog observability.",
+    "Drove platform quality: Playwright E2E across environments, i18n (including Japanese), Sentry and PostHog observability, and security dependency fixes.",
+  customerWorkflows:
+    "Built customer-facing workflows across data collection, emissions dashboards, reporting, onboarding, and AI agents in a React/Next.js monorepo for B2B climate teams.",
 } as const satisfies Record<UnravelBulletKey, string>;
 
 export const resumeVariants = {
@@ -104,6 +112,31 @@ export const resumeVariants = {
       "emissionsDashboards",
     ],
   },
+  floEnergy: {
+    focusLine:
+      "Senior frontend engineer for climate and energy products: React/Next.js customer journeys, AI interfaces, and production ownership.",
+    skills: [
+      "React",
+      "TypeScript",
+      "Next.js",
+      "TanStack Query/Router/Table",
+      "Tailwind CSS",
+      "MUI",
+      "Playwright E2E",
+      "AI chat UX",
+      "Design systems",
+      "i18n",
+      "Sentry/PostHog",
+      "Supabase/Postgres",
+    ],
+    unravelBulletKeys: [
+      "customerWorkflows",
+      "copilot",
+      "chartBuilder",
+      "dataUpload",
+      "platformQuality",
+    ],
+  },
 } as const satisfies Record<ResumeVariantId, ResumeVariant>;
 
 const defaultSkills = [
@@ -114,8 +147,11 @@ const defaultSkills = [
   "Tailwind CSS",
   "MUI",
   "Playwright E2E",
-  "Supabase",
+  "AI chat UX",
+  "Design systems",
   "i18n",
+  "Sentry/PostHog",
+  "Supabase",
 ] as const;
 
 const unravelCarbonJob = {
