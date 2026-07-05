@@ -1,5 +1,5 @@
+import { ResumeToolbar } from "@/components/ResumeToolbar";
 import type { Metadata } from "next";
-import Link from "next/link";
 import type { JobBullet } from "./resume-content";
 import { resume, resumePageUrl } from "./resume-content";
 
@@ -114,7 +114,7 @@ export const metadata: Metadata = {
 
 export default function ResumePage() {
   return (
-    <div className="min-h-dvh bg-white font-sans text-base leading-normal text-[#24292f] antialiased">
+    <div className="resume-page min-h-dvh bg-white font-sans text-base leading-normal text-[#24292f] antialiased print:bg-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd }}
@@ -128,11 +128,7 @@ export default function ResumePage() {
       </a>
 
       <div className="mx-auto max-w-[980px] px-4 py-8 print:py-4 sm:px-8">
-        <p className="mb-6 text-right print:hidden">
-          <Link href="/" className={linkClass}>
-            Home
-          </Link>
-        </p>
+        <ResumeToolbar />
 
         <main
           id="main"
