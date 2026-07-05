@@ -26,124 +26,212 @@ export type SideProject = {
   href?: string;
 };
 
+export type ResumeVariantId = "default" | "climate" | "ai" | "platform";
+
+type UnravelBulletKey =
+  | "copilot"
+  | "chartBuilder"
+  | "productionSupport"
+  | "emissionsDashboards"
+  | "dataUpload"
+  | "platformQuality";
+
+type ResumeVariant = {
+  focusLine: string;
+  skills?: readonly string[];
+  unravelBulletKeys: readonly UnravelBulletKey[];
+};
+
+/**
+ * Active variant for the public resume page.
+ * Change when tailoring for a specific job post (see notes/resume-guidance.md).
+ */
+export const activeResumeVariantId = "default" satisfies ResumeVariantId;
+
+const unravelBulletPool = {
+  copilot:
+    "Shipped frontend for Sustainability Copilot and AI agents (peer benchmarking, gap analysis, data collection), including chat UX, tool artifacts, and streaming workflows used by enterprise sustainability teams.",
+  chartBuilder:
+    "Built a custom chart builder in 3 weeks as an alternative to a paid vendor integration estimated at $10K+, owning POC through production and iterating on 70+ post-launch feedback items.",
+  productionSupport:
+    "Primary frontend owner for production support: triaged 100+ customer-facing bugs, built in-app bug reporting (platform → Slack → Notion), with ~24-minute median first response on urgent issues.",
+  emissionsDashboards:
+    "Shipped emissions dashboards and Track module UX (Scope 1/2/3 drill-down, benchmarking, time-series) for enterprise sustainability teams.",
+  dataUpload:
+    "Led frontend for enterprise data upload workflows (v1 and v2), including supplier collection, task mapping, OCR intake, and GHG category modules for fuel, waste, and refrigerants.",
+  platformQuality:
+    "Drove platform quality: Playwright E2E across environments, i18n (including Japanese), Sentry and PostHog observability.",
+} as const satisfies Record<UnravelBulletKey, string>;
+
+export const resumeVariants = {
+  default: {
+    focusLine:
+      "Senior frontend engineer: high-growth B2B product, enterprise UX, AI interfaces, shipping with ownership.",
+    unravelBulletKeys: [
+      "copilot",
+      "chartBuilder",
+      "productionSupport",
+      "emissionsDashboards",
+    ],
+  },
+  climate: {
+    focusLine:
+      "B2B climate SaaS: enterprise data workflows, Sustainability Copilot UX, production ownership.",
+    unravelBulletKeys: [
+      "copilot",
+      "chartBuilder",
+      "emissionsDashboards",
+      "dataUpload",
+    ],
+  },
+  ai: {
+    focusLine:
+      "Senior frontend engineer: AI copilot UX, streaming interfaces, and agent workflows in B2B product.",
+    unravelBulletKeys: [
+      "copilot",
+      "chartBuilder",
+      "platformQuality",
+      "productionSupport",
+    ],
+  },
+  platform: {
+    focusLine:
+      "Senior frontend engineer: platform quality, E2E testing, i18n, and design systems in production B2B apps.",
+    unravelBulletKeys: [
+      "chartBuilder",
+      "platformQuality",
+      "productionSupport",
+      "emissionsDashboards",
+    ],
+  },
+} as const satisfies Record<ResumeVariantId, ResumeVariant>;
+
+const defaultSkills = [
+  "React",
+  "TypeScript",
+  "Next.js",
+  "TanStack Query/Router/Table",
+  "Tailwind CSS",
+  "MUI",
+  "Playwright E2E",
+  "Supabase",
+  "i18n",
+] as const;
+
+const unravelCarbonJob = {
+  company: "Unravel Carbon",
+  roles: [
+    {
+      title: "Senior Frontend Engineer",
+      period: "April 2024 to present",
+      startDate: "2024-04-01",
+      endDate: null,
+    },
+    {
+      title: "Frontend Engineer",
+      period: "November 2022 to April 2024",
+      startDate: "2022-11-01",
+      endDate: "2024-04-01",
+    },
+  ],
+} as const;
+
+const otherJobs = [
+  {
+    company: "Pomelo Pay",
+    roles: [
+      {
+        title: "Senior Frontend Engineer",
+        period: "August 2022 to October 2022",
+        startDate: "2022-08-01",
+        endDate: "2022-10-01",
+      },
+    ],
+    bullets: [],
+  },
+  {
+    company: "OOZOU",
+    roles: [
+      {
+        title: "Full-stack Engineer",
+        period: "September 2021 to August 2022",
+        startDate: "2021-09-01",
+        endDate: "2022-08-01",
+      },
+    ],
+    bullets: [
+      "Full-stack engineer on a client LMS rebuild (Next.js, NestJS): admin CMS, course management, session bookings, and notification tooling.",
+    ],
+  },
+  {
+    company: "eFeed",
+    roles: [
+      {
+        title: "Product Engineer",
+        period: "December 2020 to September 2021",
+        startDate: "2020-12-01",
+        endDate: "2021-09-01",
+      },
+    ],
+    bullets: [
+      "Built rich text chat (SlateJS, Pusher), a Trello-like kanban for third-party feed items, reminders, and activity tracking at an early-stage startup.",
+    ],
+  },
+  {
+    company: "Insync",
+    roles: [
+      {
+        title: "Lead UI Engineer",
+        period: "July 2019 to December 2020",
+        startDate: "2019-07-01",
+        endDate: "2020-12-01",
+      },
+    ],
+    bullets: [
+      "Refactored 5+ year old code to modern React/JavaScript standards, enabling window resizing, responsive layouts, and significant performance gains (virtualization).",
+      "Led a rehaul of the frontend using TypeScript and automated testing for higher confidence, plus state management practices to minimize unnecessary re-renders.",
+    ],
+  },
+  {
+    company: "Stratpoint",
+    roles: [
+      {
+        title: "Frontend Software Developer",
+        period: "July 2018 to July 2019",
+        startDate: "2018-07-01",
+        endDate: "2019-07-01",
+      },
+    ],
+    bullets: [
+      "Built and maintained customized CMS-like admin dashboards for Globe, one of the Philippines’ major telecommunications companies, using React.",
+      "Led the JavaScript side of the company’s first commercial React Native project.",
+    ],
+  },
+] satisfies JobEntry[];
+
+function buildUnravelJob(bulletKeys: readonly UnravelBulletKey[]): JobEntry {
+  return {
+    company: unravelCarbonJob.company,
+    roles: unravelCarbonJob.roles.map((role) => ({ ...role })),
+    bullets: bulletKeys.map((bulletKey) => unravelBulletPool[bulletKey]),
+  };
+}
+
+const activeVariant: ResumeVariant = resumeVariants[activeResumeVariantId];
+
 export const resume = {
   name: "Sam Bautista",
   title: "Senior Frontend Engineer",
   location: "Singapore",
-  focusLine:
-    "B2B climate SaaS: enterprise data workflows, Sustainability Copilot UX, production ownership.",
+  focusLine: activeVariant.focusLine,
   phone: "+6593707275",
   email: "tadeolinco@gmail.com",
   links: [
     { label: "tadeolinco.dev", href: "https://tadeolinco.dev" },
     { label: "LinkedIn", href: "https://linkedin.com/in/tadeolinco" },
   ],
-  skills: [
-    "React",
-    "TypeScript",
-    "Next.js",
-    "TanStack Query/Router/Table",
-    "Tailwind CSS",
-    "MUI",
-    "Playwright E2E",
-    "Supabase",
-    "i18n",
-  ],
-  jobs: [
-    {
-      company: "Unravel Carbon",
-      roles: [
-        {
-          title: "Senior Frontend Engineer",
-          period: "April 2024 to present",
-          startDate: "2024-04-01",
-          endDate: null,
-        },
-        {
-          title: "Frontend Engineer",
-          period: "November 2022 to April 2024",
-          startDate: "2022-11-01",
-          endDate: "2024-04-01",
-        },
-      ],
-      bullets: [
-        "Shipped frontend for Sustainability Copilot and AI agents (peer benchmarking, gap analysis, data collection), including chat UX, tool artifacts, and streaming workflows used by enterprise sustainability teams.",
-        "Built a custom chart builder in 3 weeks as an alternative to a paid vendor integration estimated at $10K+, owning POC through production and iterating on 70+ post-launch feedback items.",
-        "Primary frontend owner for production support: triaged 100+ customer-facing bugs, built in-app bug reporting (platform → Slack → Notion), with ~24-minute median first response on urgent issues.",
-        "Shipped emissions dashboards and Track module UX (Scope 1/2/3 drill-down, benchmarking, time-series) for enterprise sustainability teams.",
-      ],
-    },
-    {
-      company: "Pomelo Pay",
-      roles: [
-        {
-          title: "Senior Frontend Engineer",
-          period: "August 2022 to October 2022",
-          startDate: "2022-08-01",
-          endDate: "2022-10-01",
-        },
-      ],
-      bullets: [],
-    },
-    {
-      company: "OOZOU",
-      roles: [
-        {
-          title: "Full-stack Engineer",
-          period: "September 2021 to August 2022",
-          startDate: "2021-09-01",
-          endDate: "2022-08-01",
-        },
-      ],
-      bullets: [
-        "Full-stack engineer on a client LMS rebuild (Next.js, NestJS): admin CMS, course management, session bookings, and notification tooling.",
-      ],
-    },
-    {
-      company: "eFeed",
-      roles: [
-        {
-          title: "Product Engineer",
-          period: "December 2020 to September 2021",
-          startDate: "2020-12-01",
-          endDate: "2021-09-01",
-        },
-      ],
-      bullets: [
-        "Built rich text chat (SlateJS, Pusher), a Trello-like kanban for third-party feed items, reminders, and activity tracking at an early-stage startup.",
-      ],
-    },
-    {
-      company: "Insync",
-      roles: [
-        {
-          title: "Lead UI Engineer",
-          period: "July 2019 to December 2020",
-          startDate: "2019-07-01",
-          endDate: "2020-12-01",
-        },
-      ],
-      bullets: [
-        "Refactored 5+ year old code to modern React/JavaScript standards, enabling window resizing, responsive layouts, and significant performance gains (virtualization).",
-        "Led a rehaul of the frontend using TypeScript and automated testing for higher confidence, plus state management practices to minimize unnecessary re-renders.",
-      ],
-    },
-    {
-      company: "Stratpoint",
-      roles: [
-        {
-          title: "Frontend Software Developer",
-          period: "July 2018 to July 2019",
-          startDate: "2018-07-01",
-          endDate: "2019-07-01",
-        },
-      ],
-      bullets: [
-        "Built and maintained customized CMS-like admin dashboards for Globe, one of the Philippines’ major telecommunications companies, using React.",
-        "Led the JavaScript side of the company’s first commercial React Native project.",
-      ],
-    },
-  ] satisfies JobEntry[],
+  skills: [...(activeVariant.skills ?? defaultSkills)],
+  jobs: [buildUnravelJob(activeVariant.unravelBulletKeys), ...otherJobs],
   sideProjects: [
     {
       title: "Can Book",

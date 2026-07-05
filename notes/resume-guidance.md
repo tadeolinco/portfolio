@@ -7,10 +7,31 @@ Operational guide for editing `/resume` and job-facing copy. **Ubiquitous langua
 | What | Path |
 | --- | --- |
 | Resume data | `src/app/resume/resume-content.ts` |
+| Resume variants | `activeResumeVariantId` + `resumeVariants` in `resume-content.ts` |
 | Resume page | `src/app/resume/page.tsx` |
 | Work history detail | `notes/unravel-work/` |
 
 After substantive edits, run `npm run lint`. Follow `.cursor/rules/copywriting.mdc` and `.cursor/rules/commit-message.mdc`.
+
+## Tailoring for a job post
+
+The public resume supports variants without duplicating the whole page.
+
+1. Open `src/app/resume/resume-content.ts`
+2. Set `activeResumeVariantId` to one of: `default`, `climate`, `ai`, `platform`
+3. Optionally edit that variant's `focusLine`, `skills`, or `unravelBulletKeys`
+4. Add new bullet copy to `unravelBulletPool` if needed, then reference the key from a variant
+
+| Variant | Focus | Unravel bullets (keys) |
+| --- | --- | --- |
+| `default` | High-growth B2B, enterprise UX, AI, ownership | copilot, chartBuilder, productionSupport, emissionsDashboards |
+| `climate` | B2B climate SaaS, domain-specific | copilot, chartBuilder, emissionsDashboards, dataUpload |
+| `ai` | AI copilot, streaming, agents | copilot, chartBuilder, platformQuality, productionSupport |
+| `platform` | E2E, i18n, design systems | chartBuilder, platformQuality, productionSupport, emissionsDashboards |
+
+Future options: query param (`/resume?variant=ai`), deploy preview per application, or PDF export script.
+
+Default variant uses Option B focus line (industry-agnostic; climate lives in Unravel bullets and `climate` variant).
 
 ## Career timeline
 

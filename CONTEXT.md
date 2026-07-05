@@ -49,8 +49,12 @@ _Avoid_: Unravel, UC, current company
 ## Resume presentation
 
 **Focus line**:
-The positioning sentence under the resume name and title; names domain and strengths, not generic traits alone.
-_Avoid_: Summary, objective, headline
+The positioning sentence under the resume name and title; states craft and product shape (B2B, enterprise UX, AI), not a single industry unless using a tailored variant.
+_Avoid_: Summary, objective, headline, industry lock-in on the default variant
+
+**Resume variant**:
+A named preset (`default`, `climate`, `ai`, `platform`) that overrides focus line and Unravel bullet selection for a target job post. Selected via `activeResumeVariantId` in `resume-content.ts`.
+_Avoid_: Version, copy, duplicate resume file
 
 **Skills section**:
 Listed capabilities and toolchain on the resume (e.g. React, Playwright)—not repositories or accounts mistaken for skills.
