@@ -35,82 +35,168 @@ After substantive edits, run `npm run lint`. Follow `.cursor/rules/copywriting.m
 ### Headline facts (for bullets)
 
 - ~1,500+ merged PRs over ~3.5 years; continuous production shipping in B2B climate/SaaS
-- Breadth: data upload, emissions dashboards, reporting/disclosures, PCF, Sustainability Copilot/agents, onboarding, platform quality
+- Largest contribution areas by merged PRs: emissions dashboards (222), data upload (144), data review (101), platform quality (93), AI/Copilot (70)
 - Differentiators: chart builder ROI ($10K+ vendor avoided, 3 weeks, 70+ post-launch feedback items), production support ownership (~24 min median first response on urgent issues in sampled threads)
 
 ## Resume review (strategy)
 
-Last reviewed: Jul 2026. Compared `resume-content.ts` to `notes/unravel-work/`.
+Last reviewed: Jul 5, 2026. Compared `resume-content.ts` to `notes/unravel-work/` and [CONTEXT.md](../CONTEXT.md).
 
 ### Overall read
 
-Strong at the top (Unravel): outcomes, numbers, ownership. Weaker in the middle (Pomelo Pay, some older bullets). Resume **under-represents** emissions dashboards, analytics, reporting, and PCF; **over-represents** production support relative to feature delivery. Tune by target role.
+You read as a **senior IC who ships B2B product, builds AI UX, and owns production**—not a generic React developer. Unravel bullets are the strongest section: metrics, ownership, domain vocabulary.
+
+Three structural problems:
+
+1. **Title lag** — page says "Frontend Engineer"; current role is Senior since April 2024.
+2. **Coverage skew** — resume highlights AI, chart builder, support, and upload, but **emissions dashboards (222 merged PRs) are absent**. That is the largest body of work on the page.
+3. **Middle collapse** — Pomelo Pay (~2.5 months) has the weakest bullets on the entire resume. OOZOU bullets are process-heavy. Together they undercut an otherwise strong 3+ year Unravel anchor.
+
+Career arc context (from CONTEXT.md): OOZOU enabled Singapore relocation; employer later restructured (~70% layoffs). Pomelo was a **short stint** between OOZOU and a **quick landing** at Unravel (~3 weeks). None of this is a performance story—do not leave Pomelo looking like unexplained filler.
 
 ### Header and positioning
 
 | Current | Issue | Suggestion |
 | --- | --- | --- |
-| Title: "Frontend Engineer" | Current role is Senior | **Senior Frontend Engineer** (optionally "· B2B SaaS") |
-| Focus line | Generic | Specific domain: B2B SaaS, enterprise data workflows, Sustainability Copilot UX, climate tech |
-| No location | Recruiters filter on this | **Singapore** |
+| Title: "Frontend Engineer" | Understates seniority | **Senior Frontend Engineer** |
+| Focus line: "Startups, high-growth teams: ownership, pace, product-minded work." | Could describe any IC; no domain | Name B2B SaaS + climate/enterprise data + AI product. Example: *"B2B climate SaaS: enterprise data workflows, Sustainability Copilot UX, production ownership."* |
+| No location | Recruiters and SG employers filter on this | Add **Singapore** (enabled by OOZOU relocation) |
+| Phone on public page | Spam risk | Optional: email + LinkedIn only |
 
-Optional: GitHub link; drop public phone if spam is a concern.
+Optional adds: GitHub link if public repos matter for the role.
 
 ### Skills section
 
-Problems: "GitHub" is not a skill; "TanStack" too vague; missing design systems, i18n, E2E, streaming/AI UI; inconsistent casing (`Typescript` → TypeScript).
+Current list mixes good signals with noise:
 
-Example grouped list: React, TypeScript, Next.js, TanStack (Query/Router/Table), Tailwind CSS, design systems (MUI), Playwright E2E, Supabase, streaming/AI chat UX, i18n, Vite. Tailor per application.
+| Problem | Fix |
+| --- | --- |
+| "GitHub" | Remove; not a skill |
+| "TanStack" alone | Specify: TanStack Query, Router, Table (or Start for side projects) |
+| "ReactJS", "NextJS", "TailwindCSS", "Typescript" | Normalize: React, Next.js, Tailwind CSS, TypeScript |
+| Missing | Design systems, i18n, Playwright E2E (not just Playwright), streaming/AI chat UX, Vite |
 
-### Unravel Carbon bullets (keep 4; rotate by job)
+Suggested default: React, TypeScript, Next.js, TanStack (Query/Router/Table), Tailwind CSS, MUI, Playwright E2E, Supabase, i18n. Tailor per job.
 
-**Keep as anchors:**
+### Unravel Carbon (4 bullets — rotate by role)
 
-1. **Chart builder** — $10K+ vendor avoided, 3 weeks, 70+ feedback items.
-2. **Sustainability Copilot** — chat UX, tool artifacts, streaming; enterprise sustainability teams.
+**Current bullets — grade:**
 
-**Revise or compress:**
+| # | Topic | Grade | Notes |
+| --- | --- | --- | --- |
+| 1 | Sustainability Copilot + agents | A | Strong for AI roles; names chat UX, artifacts, streaming, enterprise users |
+| 2 | Chart builder | A+ | Best bullet: $10K+, 3 weeks, 70+ feedback, POC→prod ownership |
+| 3 | Production support | B+ | Differentiating for startups; slightly long; "54 Notion tickets" is redundant with "100+ bugs" |
+| 4 | Data upload | B | Good domain signal; jargon-heavy (OCR, fuel/waste/refrigerants) for general FE roles |
 
-3. **Production support ownership** — strong differentiator but long; compress triage + in-app reporting into one line if tight on space.
-4. **Data upload** — good domain signal; trim jargon (OCR, GHG category lists) unless climate-tech role.
+**Missing high-value themes** (from work notes contribution counts):
 
-**Swap in (pick 1 to 2 by job posting):**
+- **Emissions dashboards** (222 PRs) — highest priority swap-in
+- **Reporting / ISSB disclosures** (33 merged)
+- **PCF** (33 merged)
+- **Platform quality** (93 merged): E2E, i18n/Japanese, Sentry, PostHog
 
-- Emissions dashboards / Track module (Scope 1/2/3, drill-down, benchmarking)
-- Disclosure / ISSB reporting UI
-- PCF (assessment library, BOM upload, templates, compare)
-- Platform quality (Playwright E2E, i18n including Japanese, Sentry/PostHog)
+**Recommended default set:**
 
-**Default four:** Sustainability Copilot · chart builder · emissions dashboards *or* data upload · production support ownership *or* platform quality.
+1. Sustainability Copilot + agents (keep)
+2. Chart builder (keep)
+3. Emissions dashboards *or* data upload (pick by job; default **emissions dashboards** since upload is already represented and dashboards are underrepresented)
+4. Production support ownership *or* platform quality (pick by job)
 
-### Pomelo Pay
+**Draft swap-in bullets** (from work notes, ready to paste/adapt):
 
-Biggest weak spot. Short tenure plus vague bullets reads like filler. Use **Restructuring exit** and **Quick landing** from CONTEXT.md for honest framing—not a performance story.
+- *Shipped emissions dashboards and Track module UX (Scope 1/2/3 drill-down, benchmarking, time-series) for enterprise sustainability teams.*
+- *Contributed to PCF: assessment library, BOM upload flows, templates, and product comparison.*
+- *Built disclosure and ISSB reporting UI for regulatory and voluntary sustainability reports.*
+- *Drove platform quality: Playwright E2E across environments, i18n (including Japanese), Sentry and PostHog observability.*
 
-Options: one outcome-focused bullet; dates only; never leave vague bullets.
+**Compress production support** if keeping it:
 
-### Older roles
+> *Primary frontend owner for production support: triaged 100+ customer-facing bugs, built in-app reporting (platform → Slack → Notion), ~24-minute median first response on urgent issues.*
 
-Compress pre-2022 to 1 to 2 bullets each. Keep Insync (virtualization, TS migration) and Stratpoint (Globe, React Native). Trim process narration (JIRA, "worked as").
+### Pomelo Pay — fix or minimize
+
+**Current state:** two **vague bullets** ("updated legacy Redux", "introduced best practices"). Worst section on the page.
+
+**Context to use in interviews, not necessarily on resume:** post-OOZOU restructuring environment; ~2.5 months; landed at Unravel within ~3 weeks.
+
+**Resume options (pick one):**
+
+1. **Dates only** — no bullets (cleanest if nothing defensible to quantify)
+2. **One concrete bullet** — only if you can name what shipped (e.g. Redux Toolkit migration on specific surfaces)
+3. **Never** leave current vague copy
+
+### OOZOU
+
+**Current state:** process narration ("worked as", "translate from JIRA") without outcomes.
+
+**Keep:** Singapore relocation enabled this role; full-stack LMS work (Next.js/NestJS admin CMS, bookings, notifications).
+
+**Suggested rewrite (1 bullet):**
+
+> *Full-stack engineer on a client LMS rebuild (Next.js, NestJS): admin CMS, course management, session bookings, and notification tooling.*
+
+Second bullet optional; compress or drop JIRA wording.
+
+### Older roles (pre-2021)
+
+| Role | Verdict |
+| --- | --- |
+| **eFeed** | Keep 1 bullet: early startup, SlateJS chat + Pusher, kanban feeds. Drop company-description opener. |
+| **Insync** | Keep both: legacy React refactor, virtualization, TS migration. Strong senior signals. |
+| **Stratpoint** | Keep 1–2: Globe telecom dashboards + first commercial React Native project. Good name recognition in PH market. |
+
+Target: **1–2 bullets max** per pre-2022 role on a senior resume.
 
 ### Side projects
 
-**Can Book** (**Flagship side project**) leads the section; link canbook.sh prominently.
+**Can Book** is the **flagship side project** — full product, scraping pipeline, 8+ cinema chains, digest email, TanStack Start. Should lead the section. Make `canbook.sh` a link in the UI if not already.
 
-Expenses Tracker and Workout Tracker: personal apps in daily use; can combine into one line if space is tight.
+**Expenses Tracker** and **Workout Tracker**: credible "shipped and used daily" signal but less distinctive. Option: combine into one line to save space for Unravel breadth.
+
+### Education
+
+Fine as-is. No graduation year needed at this seniority.
 
 ### Role-targeting cheat sheet
 
-| Applying for | Lead with | De-emphasize |
-| --- | --- | --- |
-| AI / agent products | Sustainability Copilot, streaming UX, Gap Analyzer | Data upload minutiae |
-| Senior frontend / product eng | Chart builder ROI, upload + emissions dashboards breadth | Bug ticket counts |
-| Platform / quality | Platform quality, E2E, i18n, Sentry | Early-career detail |
-| Startup IC | Production support ownership, chart builder speed, Can Book | Long history section |
-| Enterprise / climate tech | Scope 1 to 3, ISSB, PCF, enterprise upload | Side projects (unless full page) |
+| Applying for | Lead with | Swap in | De-emphasize |
+| --- | --- | --- | --- |
+| AI / agent products | Sustainability Copilot, streaming UX, Gap Analyzer | Agent artifacts, knowledge vault | GHG category module lists |
+| Senior frontend / product eng | Chart builder ROI, emissions dashboards + upload breadth | PCF or reporting if relevant | Bug ticket counts |
+| Platform / quality | Platform quality, E2E, i18n, Sentry | Design system contributions | eFeed/Stratpoint detail |
+| Startup IC | Chart builder speed, production support ownership, Can Book | Quick landing narrative in interviews | Long pre-2020 history |
+| Enterprise / climate tech | Scope 1–3, ISSB, PCF, enterprise upload | Data review, financed emissions | Side projects (unless full page) |
 
-### Priority fixes
+### What to add
 
-1. Rewrite or minimize Pomelo Pay (with restructuring-exit context).
-2. Swap one Unravel bullet for emissions dashboards.
-3. Fix header: Senior title, Singapore, specific focus line.
+1. **Senior Frontend Engineer** title
+2. **Singapore** location
+3. **Domain-specific focus line**
+4. **One emissions dashboards bullet** at Unravel
+5. **Sharper skills** (drop GitHub, specify TanStack)
+6. **Can Book** as clickable link
+
+### What to remove or shorten
+
+1. Pomelo **vague bullets** (replace or drop entirely)
+2. **"GitHub"** from skills
+3. **"54 Notion tickets"** (redundant with 100+ bugs)
+4. OOZOU **JIRA / "worked as"** phrasing
+5. eFeed **company-description** opener (lead with what you built)
+
+### Priority fixes (do these first)
+
+1. Fix header: Senior title, Singapore, specific focus line
+2. Swap one Unravel bullet for **emissions dashboards**
+3. Rewrite or minimize **Pomelo Pay**
+
+### Interview strengths (not on resume, but support the story)
+
+From work notes — use when bullets cannot fit:
+
+- Breadth across upload, analytics, reporting, AI, admin, industry modules
+- 1,500+ PRs, continuous staging/prod delivery
+- Enterprise sustainability domain: Scope 1/2/3, PCF, ISSB, materiality, financed emissions
+- Production fixes under customer deadlines (SATS, GFG, Lestari, Canon, Sony, MHI)
+- Restructuring exit → short stint → quick landing at Unravel (career arc, not performance)

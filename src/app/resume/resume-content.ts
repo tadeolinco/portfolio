@@ -23,13 +23,15 @@ export const resumePageUrl = "https://tadeolinco.dev/resume" as const;
 export type SideProject = {
   title: string;
   summary: string;
+  href?: string;
 };
 
 export const resume = {
   name: "Sam Bautista",
-  title: "Frontend Engineer",
+  title: "Senior Frontend Engineer",
+  location: "Singapore",
   focusLine:
-    "Startups, high-growth teams: ownership, pace, product-minded work.",
+    "B2B climate SaaS: enterprise data workflows, Sustainability Copilot UX, production ownership.",
   phone: "+6593707275",
   email: "tadeolinco@gmail.com",
   links: [
@@ -37,15 +39,15 @@ export const resume = {
     { label: "LinkedIn", href: "https://linkedin.com/in/tadeolinco" },
   ],
   skills: [
-    "ReactJS",
-    "TanStack",
-    "NextJS",
-    "TailwindCSS",
+    "React",
+    "TypeScript",
+    "Next.js",
+    "TanStack Query/Router/Table",
+    "Tailwind CSS",
     "MUI",
-    "Playwright",
+    "Playwright E2E",
     "Supabase",
-    "Typescript",
-    "GitHub",
+    "i18n",
   ],
   jobs: [
     {
@@ -67,8 +69,8 @@ export const resume = {
       bullets: [
         "Shipped frontend for Sustainability Copilot and AI agents (peer benchmarking, gap analysis, data collection), including chat UX, tool artifacts, and streaming workflows used by enterprise sustainability teams.",
         "Built a custom chart builder in 3 weeks as an alternative to a paid vendor integration estimated at $10K+, owning POC through production and iterating on 70+ post-launch feedback items.",
-        "Primary frontend owner for production support: triaged 100+ customer-facing bugs, built in-app bug reporting (platform → Slack → Notion), and resolved 54 Notion tickets with ~24-minute median first response on urgent issues.",
-        "Led frontend for enterprise data upload workflows (v1 and v2), including supplier collection, task mapping, OCR intake, and GHG category modules for fuel, waste, and refrigerants.",
+        "Primary frontend owner for production support: triaged 100+ customer-facing bugs, built in-app bug reporting (platform → Slack → Notion), with ~24-minute median first response on urgent issues.",
+        "Shipped emissions dashboards and Track module UX (Scope 1/2/3 drill-down, benchmarking, time-series) for enterprise sustainability teams.",
       ],
     },
     {
@@ -81,10 +83,7 @@ export const resume = {
           endDate: "2022-10-01",
         },
       ],
-      bullets: [
-        "Updated legacy Redux to use more modern approaches for global state.",
-        "Introduced the team to best practices in React.",
-      ],
+      bullets: [],
     },
     {
       company: "OOZOU",
@@ -97,8 +96,7 @@ export const resume = {
         },
       ],
       bullets: [
-        "Worked as a full-stack engineer on a client’s revamped learning management system.",
-        "Used NextJS and NestJS to translate technical requirements from JIRA into new features, mostly for their admin CMS, course management platform, course session bookings, and email/notifications CMS.",
+        "Full-stack engineer on a client LMS rebuild (Next.js, NestJS): admin CMS, course management, session bookings, and notification tooling.",
       ],
     },
     {
@@ -112,8 +110,7 @@ export const resume = {
         },
       ],
       bullets: [
-        "Very early-stage startup aggregating third-party data from different apps as feeds, with supplementary features for a collaborative workflow.",
-        "Implemented features such as rich text chat using SlateJS and Pusher, a Trello-like kanban for feed items from third-party apps, reminders, and activities.",
+        "Built rich text chat (SlateJS, Pusher), a Trello-like kanban for third-party feed items, reminders, and activity tracking at an early-stage startup.",
       ],
     },
     {
@@ -142,7 +139,7 @@ export const resume = {
         },
       ],
       bullets: [
-        "Built and maintained customized CMS-like admin dashboards for Globe, one of the Philippines’ major telecommunications companies, using ReactJS.",
+        "Built and maintained customized CMS-like admin dashboards for Globe, one of the Philippines’ major telecommunications companies, using React.",
         "Led the JavaScript side of the company’s first commercial React Native project.",
       ],
     },
@@ -150,18 +147,14 @@ export const resume = {
   sideProjects: [
     {
       title: "Can Book",
+      href: "https://canbook.sh",
       summary:
-        "Letterboxd-inspired showtimes board for Singapore and Philippines cinemas. Server Playwright scrapes across 8+ chains, normalizes rows into one poster grid with booking deep links, favourite venues, watchlist alerts, and a weekly digest email. TanStack Start, Supabase, Vercel Blob. canbook.sh.",
+        "Letterboxd-inspired showtimes board for Singapore and Philippines cinemas. Server Playwright scrapes across 8+ chains, normalizes rows into one poster grid with booking deep links, favourite venues, watchlist alerts, and a weekly digest email. TanStack Start, Supabase, Vercel Blob.",
     },
     {
-      title: "Expenses Tracker",
+      title: "Personal productivity apps",
       summary:
-        "Mobile-first expense logging and category trends; in daily use 2+ years. Next.js, Tailwind, Prisma, Supabase.",
-    },
-    {
-      title: "Workout Tracker",
-      summary:
-        "Session logging with in-app timer and audio cues. Next.js, Tailwind, Prisma, Supabase.",
+        "Expenses Tracker and Workout Tracker: mobile-first logging, category trends, in-app timers; in daily use 2+ years. Next.js, Tailwind, Prisma, Supabase.",
     },
   ] satisfies SideProject[],
   education: {

@@ -40,6 +40,11 @@ const jsonLd = (() => {
         url: "https://tadeolinco.dev",
         jobTitle: resume.jobs[0]?.roles[0]?.title ?? resume.title,
         description: resume.focusLine,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: resume.location,
+          addressCountry: "SG",
+        },
         sameAs: resume.links.map((l) => l.href),
         knowsAbout: skills,
         alumniOf: {
@@ -136,6 +141,7 @@ export default function ResumePage() {
           <header>
             <h1>{resume.name}</h1>
             <p className="!mt-0 !mb-2 font-semibold">{resume.title}</p>
+            <p className="!mt-0 !mb-2 text-[#57606a]">{resume.location}</p>
             <p className="!my-2">{resume.focusLine}</p>
 
             <p className="!my-4">
@@ -194,7 +200,9 @@ export default function ResumePage() {
                       </li>
                     ))}
                   </ul>
-                  <BulletList items={job.bullets} />
+                  {job.bullets.length > 0 ? (
+                    <BulletList items={job.bullets} />
+                  ) : null}
                 </li>
               ))}
             </ol>
@@ -205,7 +213,20 @@ export default function ResumePage() {
             <ul className="list-none space-y-4 p-0">
               {resume.sideProjects.map((project) => (
                 <li key={project.title}>
-                  <h3 className="!mt-0 !text-base">{project.title}</h3>
+                  <h3 className="!mt-0 !text-base">
+                    {project.href ? (
+                      <a
+                        className={linkClass}
+                        href={project.href}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        {project.title}
+                      </a>
+                    ) : (
+                      project.title
+                    )}
+                  </h3>
                   <p className="!my-1">{project.summary}</p>
                 </li>
               ))}
