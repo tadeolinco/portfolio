@@ -8,7 +8,7 @@ Context for AI coding agents working in this repository.
 | --- | --- |
 | **Resume ubiquitous language (terms, career narrative vocabulary)** | [CONTEXT.md](./CONTEXT.md) |
 | **Resume strategy, timeline, editing workflow** | [notes/resume-guidance.md](./notes/resume-guidance.md) |
-| **Sam's prose voice (PRs, Slack, drafts for Sam)** | [notes/writing-style.md](./notes/writing-style.md) |
+| **Sam's prose voice (PRs, Slack, drafts for Sam)** | [notes/writing-style.md](./notes/writing-style.md), skill `.agents/skills/write-in-my-voice/` |
 | **Unravel Carbon work history (PRs, bullets, support metrics)** | [notes/unravel-work/overview.md](./notes/unravel-work/overview.md) and sibling files in that folder |
 | **Code layout and conventions** | This file (below) + `.cursor/rules/` |
 
